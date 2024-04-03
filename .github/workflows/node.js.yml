@@ -27,7 +27,7 @@ jobs:
   
       uses: actions/setup-node@v3
       with:
-        working-directory: ./tenants-association-fe
+        cache-dependency-path: '**/package-lock.json'
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm ci tenants-association-fe
