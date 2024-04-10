@@ -30,8 +30,8 @@ jobs:
         cache-dependency-path: '**/package-lock.json'
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-   # - run: npm install tenants-association-fe
-   #   working-directory: tenants-association-fe
+    - run: npm install
+      working-directory: tenants-association-fe
     - run: npm ci 
       working-directory: tenants-association-fe
     - run: npm config set registry http://registry.npmjs.org
