@@ -36,4 +36,6 @@ jobs:
       working-directory: tenants-association-fe
     - run: npm config set registry http://registry.npmjs.org
     - run: npm run build --if-present
+      working-directory: tenants-association-fe
     - run: npm test
+      working-directory: tenants-association-fe
