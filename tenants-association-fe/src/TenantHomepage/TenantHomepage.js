@@ -13,6 +13,8 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
+import getAnnounces from '../Services/announces-service';
+
 
 const TenantHomepage=()=>{
 
@@ -21,13 +23,7 @@ const TenantHomepage=()=>{
       return { name, date };
     }
     
-    const rows = [
-      createData('Reabilitare blocuri Brazda lui Novac', "Vezi mai multe"),
-      createData('Totul despre fondul de rulment', "Vezi mai multe"),
-      createData('Acordul asociatiei,obligatoriu pentru a putea adopta mai mult de 2 caini', "Vezi mai multe"),
-      createData('Abuz in asociatii? Care sunt posibilitatile tale ca proprietar', "Vezi mai multe"),
-      createData('5 reguli de urmat de catre proprietar', "Vezi mai multe"),
-    ];
+    const anouncements = getAnnounces();
     const rows2 = [
         createData('Gaze', "04.04.2024"),
         createData('Intretinere', "01.02.2024"),
@@ -55,15 +51,15 @@ const TenantHomepage=()=>{
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableBody>
-              {rows.map((row) => (
+              {anouncements.map((anouncement) => (
                 <TableRow
-                  key={row.name}
+                  key={anouncement.title}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
                   <TableCell component="th" scope="row">
-                    {row.name}
+                    {anouncement.title}
                   </TableCell>
-                  <TableCell align="right">{row.date}</TableCell>
+                  <TableCell align="right"><a href="#">Vezi mai multe</a></TableCell>
                 </TableRow>
               ))}
             </TableBody>
