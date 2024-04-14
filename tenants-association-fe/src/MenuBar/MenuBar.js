@@ -20,7 +20,7 @@ const MenuBar = (props, children) => {
   const logOutHandler = () => {
     localStorage.removeItem("authenticated");
     setLoggedIn(false);
-    navigate("/login");
+    navigate("/");
   };
 
   const onNavigateToNeedHelp = () => {
