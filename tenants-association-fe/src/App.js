@@ -1,5 +1,5 @@
 import "./App.css";
-import LoginPage from "./LoginPage/LoginPage";
+import TenantHomepage from "./TenantHomepage/TenantHomepage";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 const theme = createTheme({
   palette: {
@@ -14,7 +14,7 @@ const theme = createTheme({
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <LoginPage></LoginPage>;
+     <TenantHomepage></TenantHomepage>
     </ThemeProvider>
   );
 }
