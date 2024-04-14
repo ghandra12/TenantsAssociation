@@ -1,30 +1,35 @@
 import React, { useState } from "react";
-import MenuBar from "../MenuBar/MenuBar";
-//import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
-function LoginPage() {
+const LoginPage = (props) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
-  //const navigate = useNavigate();
+  const navigate = useNavigate();
   const onChangeEmailHandler = (event) => {
     setEmail(event.target.value);
   };
   const onChangePasswordHandler = (event) => {
     setPassword(event.target.value);
   };
-  //   const onClickHandler = () => {
-  //     //navigate("");
-  //     //Navigam la HomePage;
-  //   };
+  const onSubmitHandler = (event) => {
+    event.preventDefault();
+    if (email.length >= 8 && password.length >= 8) {
+      localStorage.setItem("authenticated", true);
+      console.info(props);
+      props.setLoggedIn(true);
+      navigate("/");
+    } else {
+      alert("Email and password should have at least 8 characters!");
+    }
+  };
   return (
     <form>
       <Box sx={{ flexGrow: 1 }}>
-        <MenuBar></MenuBar>
         <Grid
           container
           direction="column"
@@ -66,7 +71,12 @@ function LoginPage() {
             />
           </Grid>
           <Grid item xs={6}>
-            <Button color="secondary" type="submit" variant="contained">
+            <Button
+              color="secondary"
+              type="submit"
+              onClick={onSubmitHandler}
+              variant="contained"
+            >
               Log in
             </Button>
           </Grid>
@@ -74,5 +84,5 @@ function LoginPage() {
       </Box>
     </form>
   );
-}
+};
 export default LoginPage;
