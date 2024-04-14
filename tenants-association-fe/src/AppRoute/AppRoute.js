@@ -34,7 +34,7 @@ function AppRoutes({ loggedIn, setLoggedIn }) {
           )
         }
       />
-      <Route exact path="/needHelp" element={<NeedHelp></NeedHelp>} />
+      <Route exact path="/needHelp" element={<NeedHelp />} />
     </Routes>
   );
 }
