@@ -16,6 +16,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<TenantsAssociationDBContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("TenantsAssociationDatabase")));
+
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IUserService, UserService>();
 var app = builder.Build();
