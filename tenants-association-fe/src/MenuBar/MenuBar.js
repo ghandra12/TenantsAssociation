@@ -19,6 +19,7 @@ const MenuBar = (props, children) => {
 
   const logOutHandler = () => {
     localStorage.removeItem("authenticated");
+    sessionStorage.removeItem("authenticated");
     setLoggedIn(false);
     navigate("/");
   };
