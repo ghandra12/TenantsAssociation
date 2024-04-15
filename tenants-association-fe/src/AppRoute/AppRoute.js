@@ -4,7 +4,10 @@ import NeedHelp from "../NeedHelp/NeedHelp";
 import TenantHomepage from "../TenantHomepage/TenantHomepage";
 import AdminHomepage from "../AdminHomepage/AdminHomepage";
 const ProtectedRoute = ({ redirectPath = "/login", children }) => {
-  if (!localStorage.getItem("authenticated")) {
+  if (
+    !localStorage.getItem("authenticated") &&
+    !sessionStorage.getItem("authenticated")
+  ) {
     return <Navigate to={redirectPath} replace />;
   }
 

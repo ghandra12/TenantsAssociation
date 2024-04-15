@@ -15,6 +15,9 @@ const MenuBar = (props, children) => {
     if (localStorage.getItem("authenticated")) {
       setLoggedIn(true);
     }
+    if (sessionStorage.getItem("authenticated")) {
+      setLoggedIn(true);
+    }
   }, []);
 
   const logOutHandler = () => {

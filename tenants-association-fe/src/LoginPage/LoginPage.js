@@ -22,6 +22,12 @@ const LoginPage = (props) => {
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
+
+    if (email.length < 8 || password.length < 8) {
+      alert("Email and password should have at least 8 characters!");
+      return;
+    }
+
     API.post("user", {
       email: email,
       password: password,
@@ -29,7 +35,6 @@ const LoginPage = (props) => {
       .then((response) => {
         if (remember) localStorage.setItem("authenticated", true);
         else sessionStorage.setItem("authenticated", true);
-        console.info(props);
         props.setLoggedIn(true);
 
         if (response.data === 2) {
@@ -43,15 +48,6 @@ const LoginPage = (props) => {
       .catch((error) => {
         alert("Something is wrong. Try again!");
       });
-
-    // if (email.length >= 8 && password.length >= 8) {
-    //   localStorage.setItem("authenticated", true);
-    //   console.info(props);
-    //   props.setLoggedIn(true);
-    //   navigate("/");
-    // } else {
-    //   alert("Email and password should have at least 8 characters!");
-    // }
   };
   const rememberMeHandler = (event) => {
     setRemember(event.target.value);
