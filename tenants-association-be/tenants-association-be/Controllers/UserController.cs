@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TenantsAssociation.BusinessLogic.DTOs;
+using TenantsAssociation.BusinessLogic.enums;
 using TenantsAssociation.BusinessLogic.IServices;
 using TenantsAssociation.DataAccess.IRepository;
 
@@ -18,17 +19,16 @@ namespace tenants_association_be.Controllers
         }
 
         [HttpPost]
-        public ActionResult<bool> Login(UserDto user)
+        public ActionResult<LoginResult> Login(UserDto user)
         {
             var loggedIn = _userService.Login(user);
 
-            if (loggedIn)
-            {
-                return Ok();
-            } else
+            if(loggedIn == LoginResult.UserNotFound)
             {
                 return Unauthorized();
             }
+
+            return Ok(loggedIn);
         }
 
     }

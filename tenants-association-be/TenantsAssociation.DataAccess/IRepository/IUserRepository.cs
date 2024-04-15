@@ -12,6 +12,6 @@ namespace TenantsAssociation.DataAccess.IRepository
     public interface IUserRepository :IBaseRepository<User>
     {
         List<User> GetAdministrators();
-        bool VerifyUser(string email, string password);
+        User VerifyUser(string email, string password);
     }
 }

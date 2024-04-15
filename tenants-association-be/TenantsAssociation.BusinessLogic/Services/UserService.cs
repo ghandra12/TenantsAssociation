@@ -4,8 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TenantsAssociation.BusinessLogic.DTOs;
+using TenantsAssociation.BusinessLogic.enums;
 using TenantsAssociation.BusinessLogic.IServices;
 using TenantsAssociation.DataAccess.IRepository;
+using TenantsAssociation.DataAccess.Models;
 
 namespace TenantsAssociation.BusinessLogic.Services
 {
@@ -18,10 +20,21 @@ namespace TenantsAssociation.BusinessLogic.Services
             _unitOfWork = unitOfWork;
         }
         
-        public bool Login(UserDto user)
+        public LoginResult Login(UserDto user)
         {
-            bool ans = _unitOfWork.Users.VerifyUser(user.Email,user.Password);
-            return ans; 
+          User ans = _unitOfWork.Users.VerifyUser(user.Email,user.Password);
+            if (ans == null)
+                return LoginResult.UserNotFound;
+            if (ans.IsAdmin == true)
+            {
+                return LoginResult.LoggedInAsAdmin;
+            }
+            else 
+            {
+                return LoginResult.LoggedInAsTenant;
+            }
+           
+         
         }
        
 

@@ -2,7 +2,7 @@ import LoginPage from "../LoginPage/LoginPage";
 import { Navigate, Routes, Route } from "react-router-dom";
 import NeedHelp from "../NeedHelp/NeedHelp";
 import TenantHomepage from "../TenantHomepage/TenantHomepage";
-
+import AdminHomepage from "../AdminHomepage/AdminHomepage";
 const ProtectedRoute = ({ redirectPath = "/login", children }) => {
   if (!localStorage.getItem("authenticated")) {
     return <Navigate to={redirectPath} replace />;
@@ -20,6 +20,15 @@ function AppRoutes({ loggedIn, setLoggedIn }) {
         element={
           <ProtectedRoute redirectPath="/">
             <TenantHomepage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        exact
+        path="/adminhome"
+        element={
+          <ProtectedRoute redirectPath="/">
+            <AdminHomepage />
           </ProtectedRoute>
         }
       />

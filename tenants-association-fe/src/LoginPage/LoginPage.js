@@ -31,7 +31,14 @@ const LoginPage = (props) => {
         else sessionStorage.setItem("authenticated", true);
         console.info(props);
         props.setLoggedIn(true);
-        navigate("/tenanthome");
+
+        if (response.data === 2) {
+          debugger;
+          navigate("/tenanthome");
+        } else {
+          debugger;
+          navigate("/adminhome");
+        }
       })
       .catch((error) => {
         alert("Something is wrong. Try again!");
