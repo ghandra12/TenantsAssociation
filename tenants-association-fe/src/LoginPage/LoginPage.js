@@ -33,8 +33,13 @@ const LoginPage = (props) => {
       password: password,
     })
       .then((response) => {
-        if (remember) localStorage.setItem("authenticated", true);
-        else sessionStorage.setItem("authenticated", true);
+        if (remember) {
+          localStorage.setItem("authenticated", true);
+          localStorage.setItem("userType", response.data);
+        } else {
+          sessionStorage.setItem("authenticated", true);
+          sessionStorage.setItem("userType", response.data);
+        }
         props.setLoggedIn(true);
 
         if (response.data === 2) {
