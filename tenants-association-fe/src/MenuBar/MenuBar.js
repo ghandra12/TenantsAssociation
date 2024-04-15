@@ -10,15 +10,22 @@ import AppRoutes from "../AppRoute/AppRoute";
 const MenuBar = (props, children) => {
   const navigate = useNavigate();
   const [loggedIn, setLoggedIn] = useState(false);
-
+  const [isAdmin, setIsAdmin] = useState(false);
   useEffect(() => {
     if (localStorage.getItem("authenticated")) {
       setLoggedIn(true);
     }
+    if (sessionStorage.getItem("authenticated")) {
+      setLoggedIn(true);
+    }
+    setIsAdmin(sessionStorage.getItem("userType") === "2");
   }, []);
 
   const logOutHandler = () => {
     localStorage.removeItem("authenticated");
+    sessionStorage.removeItem("authenticated");
+    localStorage.removeItem("userType");
+    sessionStorage.removeItem("userType");
     setLoggedIn(false);
     navigate("/");
   };
@@ -43,6 +50,31 @@ const MenuBar = (props, children) => {
           {!loggedIn && (
             <Button color="inherit" onClick={onNavigateToNeedHelp}>
               Need Help?
+            </Button>
+          )}
+          {loggedIn && (
+            <Button color="inherit" onClick={logOutHandler}>
+              Dashboard
+            </Button>
+          )}
+          {!isAdmin && loggedIn && (
+            <Button color="inherit" onClick={logOutHandler}>
+              Invoices
+            </Button>
+          )}
+          {loggedIn && (
+            <Button color="inherit" onClick={logOutHandler}>
+              Your account
+            </Button>
+          )}
+          {loggedIn && isAdmin && (
+            <Button color="inherit" onClick={logOutHandler}>
+              Services
+            </Button>
+          )}
+          {loggedIn && !isAdmin && (
+            <Button color="inherit" onClick={logOutHandler}>
+              Contact
             </Button>
           )}
           {loggedIn && (

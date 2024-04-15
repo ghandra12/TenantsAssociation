@@ -6,26 +6,54 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
+import API from "../Services/api";
 const LoginPage = (props) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const [remember, setRemember] = useState();
   const navigate = useNavigate();
+
   const onChangeEmailHandler = (event) => {
     setEmail(event.target.value);
   };
   const onChangePasswordHandler = (event) => {
     setPassword(event.target.value);
   };
+
   const onSubmitHandler = (event) => {
     event.preventDefault();
-    if (email.length >= 8 && password.length >= 8) {
-      localStorage.setItem("authenticated", true);
-      console.info(props);
-      props.setLoggedIn(true);
-      navigate("/");
-    } else {
+
+    if (email.length < 8 || password.length < 8) {
       alert("Email and password should have at least 8 characters!");
+      return;
     }
+
+    API.post("user", {
+      email: email,
+      password: password,
+    })
+      .then((response) => {
+        if (remember) {
+          localStorage.setItem("authenticated", true);
+          localStorage.setItem("userType", response.data);
+        } else {
+          sessionStorage.setItem("authenticated", true);
+          sessionStorage.setItem("userType", response.data);
+        }
+        props.setLoggedIn(true);
+
+        if (response.data === 2) {
+          navigate("/tenanthome");
+        } else {
+          navigate("/adminhome");
+        }
+      })
+      .catch((error) => {
+        alert("Something is wrong. Try again!");
+      });
+  };
+  const rememberMeHandler = (event) => {
+    setRemember(event.target.value);
   };
   return (
     <form>
@@ -64,10 +92,11 @@ const LoginPage = (props) => {
           </Grid>
           <Grid item xs={6}>
             <FormControlLabel
-              value="remember me"
+              value={remember}
               control={<Checkbox />}
               label="Remember me"
               labelPlacement="end"
+              onClick={rememberMeHandler}
             />
           </Grid>
           <Grid item xs={6}>
