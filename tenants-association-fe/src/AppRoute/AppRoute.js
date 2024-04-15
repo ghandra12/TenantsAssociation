@@ -3,17 +3,34 @@ import { Navigate, Routes, Route } from "react-router-dom";
 import NeedHelp from "../NeedHelp/NeedHelp";
 import TenantHomepage from "../TenantHomepage/TenantHomepage";
 import AdminHomepage from "../AdminHomepage/AdminHomepage";
-const ProtectedRoute = ({ redirectPath = "/login", children }) => {
+const TenantProtectedRoute = ({ redirectPath = "/", children }) => {
   if (
     !localStorage.getItem("authenticated") &&
     !sessionStorage.getItem("authenticated")
   ) {
     return <Navigate to={redirectPath} replace />;
   }
-
-  return children;
+  if (
+    localStorage.getItem("userType") === "2" ||
+    sessionStorage.getItem("userType") === "2"
+  )
+    return children;
+  return <Navigate to={redirectPath} replace />;
 };
-
+const AdminProtectedRoute = ({ redirectPath = "/", children }) => {
+  if (
+    !localStorage.getItem("authenticated") &&
+    !sessionStorage.getItem("authenticated")
+  ) {
+    return <Navigate to={redirectPath} replace />;
+  }
+  if (
+    localStorage.getItem("userType") === "1" ||
+    sessionStorage.getItem("userType") === "1"
+  )
+    return children;
+  return <Navigate to={redirectPath} replace />;
+};
 function AppRoutes({ loggedIn, setLoggedIn }) {
   return (
     <Routes>
@@ -21,18 +38,18 @@ function AppRoutes({ loggedIn, setLoggedIn }) {
         exact
         path="/tenanthome"
         element={
-          <ProtectedRoute redirectPath="/">
+          <TenantProtectedRoute redirectPath="/">
             <TenantHomepage />
-          </ProtectedRoute>
+          </TenantProtectedRoute>
         }
       />
       <Route
         exact
         path="/adminhome"
         element={
-          <ProtectedRoute redirectPath="/">
+          <AdminProtectedRoute redirectPath="/">
             <AdminHomepage />
-          </ProtectedRoute>
+          </AdminProtectedRoute>
         }
       />
       <Route
@@ -40,7 +57,12 @@ function AppRoutes({ loggedIn, setLoggedIn }) {
         path="/"
         element={
           loggedIn ? (
-            <Navigate to={"/tenanthome"} replace />
+            sessionStorage.getItem("userType") === "2" ||
+            localStorage.getItem("userType") === "2" ? (
+              <Navigate to={"/tenanthome"} replace />
+            ) : (
+              <Navigate to={"/adminhome"} replace />
+            )
           ) : (
             <LoginPage setLoggedIn={setLoggedIn} />
           )

@@ -43,10 +43,8 @@ const LoginPage = (props) => {
         props.setLoggedIn(true);
 
         if (response.data === 2) {
-          debugger;
           navigate("/tenanthome");
         } else {
-          debugger;
           navigate("/adminhome");
         }
       })
