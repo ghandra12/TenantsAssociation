@@ -1,5 +1,7 @@
 import "./App.css";
-import AdminHomepage from "./AdminHomepage/AdminHomepage";
+//import LoginPage from "./LoginPage/LoginPage";
+import { BrowserRouter } from "react-router-dom";
+import MenuBar from "./MenuBar/MenuBar";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 const theme = createTheme({
   palette: {
@@ -14,7 +16,9 @@ const theme = createTheme({
 function App() {
   return (
     <ThemeProvider theme={theme}>
-     <AdminHomepage></AdminHomepage>
+      <BrowserRouter>
+        <MenuBar />
+      </BrowserRouter>
     </ThemeProvider>
   );
 }
