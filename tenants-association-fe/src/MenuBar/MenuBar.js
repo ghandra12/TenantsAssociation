@@ -18,7 +18,10 @@ const MenuBar = (props, children) => {
     if (sessionStorage.getItem("authenticated")) {
       setLoggedIn(true);
     }
-    setIsAdmin(sessionStorage.getItem("userType") === "2");
+    setIsAdmin(
+      sessionStorage.getItem("userType") === "1" ||
+        localStorage.getItem("userType") === "1"
+    );
   }, []);
 
   const logOutHandler = () => {
@@ -33,6 +36,18 @@ const MenuBar = (props, children) => {
   const onNavigateToNeedHelp = () => {
     navigate("/needHelp");
   };
+  const onDashboardNavigate = () => {
+    if (isAdmin) navigate("/adminhome");
+    else navigate("/tenanthome");
+  };
+  const onLogoNavigate = () => {
+    if (loggedIn) {
+      onDashboardNavigate();
+    } else navigate("/");
+  };
+  const onContactNavigate = () => {
+    navigate("/contact");
+  };
   return (
     <div>
       <AppBar position="static">
@@ -44,7 +59,12 @@ const MenuBar = (props, children) => {
             aria-label="menu"
             sx={{ mr: 2 }}
           ></IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{ flexGrow: 1, cursor: "pointer" }}
+            onClick={onLogoNavigate}
+          >
             TenantsAssociation
           </Typography>
           {!loggedIn && (
@@ -53,27 +73,15 @@ const MenuBar = (props, children) => {
             </Button>
           )}
           {loggedIn && (
-            <Button color="inherit" onClick={logOutHandler}>
+            <Button color="inherit" onClick={onDashboardNavigate}>
               Dashboard
             </Button>
           )}
-          {!isAdmin && loggedIn && (
-            <Button color="inherit" onClick={logOutHandler}>
-              Invoices
-            </Button>
-          )}
-          {loggedIn && (
-            <Button color="inherit" onClick={logOutHandler}>
-              Your account
-            </Button>
-          )}
-          {loggedIn && isAdmin && (
-            <Button color="inherit" onClick={logOutHandler}>
-              Services
-            </Button>
-          )}
+          {!isAdmin && loggedIn && <Button color="inherit">Invoices</Button>}
+          {loggedIn && <Button color="inherit">Your account</Button>}
+          {loggedIn && isAdmin && <Button color="inherit">Services</Button>}
           {loggedIn && !isAdmin && (
-            <Button color="inherit" onClick={logOutHandler}>
+            <Button color="inherit" onClick={onContactNavigate}>
               Contact
             </Button>
           )}
