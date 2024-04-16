@@ -3,6 +3,7 @@ import { Navigate, Routes, Route } from "react-router-dom";
 import NeedHelp from "../NeedHelp/NeedHelp";
 import TenantHomepage from "../TenantHomepage/TenantHomepage";
 import AdminHomepage from "../AdminHomepage/AdminHomepage";
+import Contact from "../Contact/Contact";
 const TenantProtectedRoute = ({ redirectPath = "/", children }) => {
   if (
     !localStorage.getItem("authenticated") &&
@@ -69,6 +70,15 @@ function AppRoutes({ loggedIn, setLoggedIn }) {
         }
       />
       <Route exact path="/needHelp" element={<NeedHelp />} />
+      <Route
+        exact
+        path="/contact"
+        element={
+          <TenantProtectedRoute>
+            <Contact />
+          </TenantProtectedRoute>
+        }
+      />
     </Routes>
   );
 }
