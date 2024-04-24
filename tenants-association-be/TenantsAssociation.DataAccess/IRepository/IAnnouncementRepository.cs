@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TenantsAssociation.DataAccess.Models;
 
 namespace TenantsAssociation.DataAccess.IRepository
 {
-    public interface IUnitOfWork : IDisposable
+    public interface IAnnouncementRepository : IBaseRepository<Announcement>
     {
-        IUserRepository Users { get;  }
-        IAnnouncementRepository Announcements { get; }
-        int SaveChanges();
     }
 }
