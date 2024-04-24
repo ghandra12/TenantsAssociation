@@ -12,6 +12,7 @@ namespace TenantsAssociation.DataAccess.Repository
     {
         private readonly TenantsAssociationDBContext db;
         private IUserRepository? usersRepository;
+        public IInvoiceRepository? invoicesRepository;
 
         public UnitOfWork(TenantsAssociationDBContext dbContext)
         {
@@ -26,6 +27,17 @@ namespace TenantsAssociation.DataAccess.Repository
                     this.usersRepository = new UserRepository(db);
                 }
                 return this.usersRepository;
+            }
+        }
+        public IInvoiceRepository Invoices
+        {
+            get
+            {
+                if (this.invoicesRepository == null)
+                {
+                    this.invoicesRepository = new InvoiceRepository(db);
+                }
+                return this.invoicesRepository;
             }
         }
         public int SaveChanges()

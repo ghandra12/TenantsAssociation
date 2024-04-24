@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TenantsAssociation.DataAccess.Models;
 
 namespace TenantsAssociation.DataAccess.IRepository
 {
-    public interface IUnitOfWork : IDisposable
+    public interface IInvoiceRepository : IBaseRepository<Invoice>
     {
-        IUserRepository Users { get;  }
-        IInvoiceRepository Invoices { get; }
-        int SaveChanges();
+        List<Invoice> GetInvoicesByUserId(int Id);
     }
 }
