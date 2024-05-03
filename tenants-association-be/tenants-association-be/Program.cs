@@ -29,6 +29,7 @@ builder.Services.AddDbContext<TenantsAssociationDBContext>(options =>
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IInvoiceService, InvoiceService>();
+builder.Services.AddScoped<IAnnouncementService, AnnouncementService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
