@@ -19,17 +19,27 @@ namespace tenants_association_be.Controllers
         }
 
         [HttpPost]
-        public ActionResult<LoginResult> Login(UserDto user)
+        public ActionResult<LoginDto> Login(UserDto user)
         {
+
             var loggedIn = _userService.Login(user);
 
-            if(loggedIn == LoginResult.UserNotFound)
+            if(loggedIn.LoginResult == LoginResult.UserNotFound)
             {
                 return Unauthorized();
             }
 
             return Ok(loggedIn);
         }
+        [HttpGet]
+        [Route("getalltenants")]
+        public ActionResult<List<UserDto>> GetTenants()
+        {
+            var userDtos= _userService.GetTenants();
+            return Ok(userDtos);
+           
+        }
+
 
     }
 }

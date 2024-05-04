@@ -10,6 +10,7 @@ namespace TenantsAssociation.BusinessLogic.IServices
 {
     public interface IUserService
     {
-        LoginResult Login(UserDto user);
+        LoginDto Login(UserDto user);
+        List<UserDto> GetTenants();
     }
 }

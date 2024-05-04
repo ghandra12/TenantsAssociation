@@ -20,6 +20,7 @@ namespace TenantsAssociation.DataAccess.Models
         public double Sum { get; set; }
         public int? UserId { get; set; }
         public User? User { get; set; }
+        public bool IsPaid { get; set; }
 
 
     }

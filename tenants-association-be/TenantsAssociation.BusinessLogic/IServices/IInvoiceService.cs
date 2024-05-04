@@ -10,6 +10,10 @@ namespace TenantsAssociation.BusinessLogic.IServices
 {
     public interface IInvoiceService
     {
-        //List<Invoice> GetInvoices(InvoiceDto dto);
+        public List<InvoiceDto> GetInvoices(int id);
+        public List<InvoiceDto> GetUnpaidInvoices(int id);
+        public Task AddInvoice(InvoiceDto invoice);
+        void UpdateInvoiceStatus(int invoiceId);
+
     }
 }

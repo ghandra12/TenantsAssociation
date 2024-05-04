@@ -19,24 +19,54 @@ namespace TenantsAssociation.BusinessLogic.Services
         {
             _unitOfWork = unitOfWork;
         }
-        
-        public LoginResult Login(UserDto user)
+
+        public List<UserDto> GetTenants()
+        {
+            List<User> users = _unitOfWork.Users.GetTenants();
+
+            var userDtos = users.Select(u => new UserDto()
+            {
+                Id=u.Id,
+                Name=u.FirstName + " " + u.LastName,
+                ApartmentNumber=u.ApartmentNumber
+
+
+            }).ToList();
+
+            return userDtos;
+        }
+
+        public LoginDto Login(UserDto user)
         {
           User ans = _unitOfWork.Users.VerifyUser(user.Email,user.Password);
             if (ans == null)
-                return LoginResult.UserNotFound;
+            {
+                var loginDto = new LoginDto() {
+                    UserId = ans.Id,
+                    LoginResult = LoginResult.UserNotFound
+                };
+             return loginDto;
+            }
             if (ans.IsAdmin == true)
             {
-                return LoginResult.LoggedInAsAdmin;
+                var loginDto = new LoginDto()
+                {
+                    UserId = ans.Id,
+                    LoginResult = LoginResult.LoggedInAsAdmin
+                };
+                return loginDto;
             }
             else 
             {
-                return LoginResult.LoggedInAsTenant;
+                var loginDto = new LoginDto()
+                {
+                    UserId = ans.Id,
+                    LoginResult = LoginResult.LoggedInAsTenant
+                };
+                return loginDto;
             }
            
-         
         }
-       
-
+        }
     }
-}
+

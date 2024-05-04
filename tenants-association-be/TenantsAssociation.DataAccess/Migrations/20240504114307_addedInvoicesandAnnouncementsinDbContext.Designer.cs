@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TenantsAssociation.DataAccess.Models;
 
@@ -11,9 +12,11 @@ using TenantsAssociation.DataAccess.Models;
 namespace TenantsAssociation.DataAccess.Migrations
 {
     [DbContext(typeof(TenantsAssociationDBContext))]
-    partial class TenantsAssociationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240504114307_addedInvoicesandAnnouncementsinDbContext")]
+    partial class addedInvoicesandAnnouncementsinDbContext
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -64,9 +67,6 @@ namespace TenantsAssociation.DataAccess.Migrations
 
                     b.Property<int>("InvoiceNumber")
                         .HasColumnType("int");
-
-                    b.Property<bool>("IsPaid")
-                        .HasColumnType("bit");
 
                     b.Property<DateTime>("ReleaseDate")
                         .HasColumnType("datetime2");

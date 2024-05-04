@@ -17,7 +17,17 @@ namespace TenantsAssociation.DataAccess.Repository
         }
        public  List<Invoice> GetInvoicesByUserId(int Id)
         {
-            return GetAll().Where(c => c.UserId== Id).ToList();
+            return GetAll().Where(c => c.UserId == Id).ToList();
+        }
+
+        public Invoice? GetInvoiceById(int id)
+        {
+            return GetAll().FirstOrDefault(i => i.Id == id);
+        }
+
+       public List<Invoice> GetUnpaidInvoicesByUserId(int Id)
+        {
+            return GetAll().Where(c => c.UserId == Id && c.IsPaid==false).ToList();
         }
     }
 }

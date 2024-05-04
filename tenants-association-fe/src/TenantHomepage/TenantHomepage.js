@@ -1,4 +1,5 @@
-import * as React from "react";
+import React, { useContext, useState } from "react";
+import { useEffect } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -14,20 +15,21 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import getAnnounces from "../Services/announces-service";
-
+import API from "../Services/api";
+import UserContext from "../Services/UserContext";
 const TenantHomepage = () => {
-  function createData(name, date) {
-    return { name, date };
-  }
+  const { user } = useContext(UserContext);
+  const [invoices, setInvoices] = useState([]);
+  useEffect(() => {
+    if (user !== null) {
+      API.get(`Invoice/getunpaidinvoices/${user}`).then((response) => {
+        setInvoices(response.data);
+      });
+    }
+  }, [user]);
 
   const anouncements = getAnnounces();
-  const rows2 = [
-    createData("Gaze", "04.04.2024"),
-    createData("Intretinere", "01.02.2024"),
-    createData("Apa", "19.12.2023"),
-    createData("Curent", "04.02.2023"),
-    createData("Curent", "05.03.2024"),
-  ];
+
   return (
     <Box sx={{ flexGrow: 1, mt: 7 }}>
       <Grid
@@ -78,15 +80,15 @@ const TenantHomepage = () => {
           <TableContainer component={Paper}>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
               <TableBody>
-                {rows2.map((row) => (
+                {invoices.map((invoice) => (
                   <TableRow
-                    key={row.name}
+                    key={invoice.id}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
                     <TableCell component="th" scope="row">
-                      {row.name}
+                      {invoice.description}
                     </TableCell>
-                    <TableCell align="right">{row.date}</TableCell>
+                    <TableCell align="right">{invoice.dueDate}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>

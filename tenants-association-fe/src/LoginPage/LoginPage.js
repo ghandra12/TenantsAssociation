@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -7,10 +7,13 @@ import Box from "@mui/material/Box";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import API from "../Services/api";
+import UserContext from "../Services/UserContext";
 const LoginPage = (props) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [remember, setRemember] = useState();
+  const { setUser } = useContext(UserContext);
+
   const navigate = useNavigate();
 
   const onChangeEmailHandler = (event) => {
@@ -35,12 +38,16 @@ const LoginPage = (props) => {
       .then((response) => {
         if (remember) {
           localStorage.setItem("authenticated", true);
-          localStorage.setItem("userType", response.data);
+          localStorage.setItem("userType", response.data.loginResult);
+          localStorage.setItem("userId", response.data.userId);
         } else {
           sessionStorage.setItem("authenticated", true);
-          sessionStorage.setItem("userType", response.data);
+          sessionStorage.setItem("userType", response.data.loginResult);
+          sessionStorage.setItem("userId", response.data.userId);
         }
         props.setLoggedIn(true);
+
+        setUser(response.data.userId);
 
         if (response.data === 2) {
           navigate("/tenanthome");

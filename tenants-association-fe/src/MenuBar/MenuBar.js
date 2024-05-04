@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Toolbar from "@mui/material/Toolbar";
@@ -7,16 +7,22 @@ import IconButton from "@mui/material/IconButton";
 import AppBar from "@mui/material/AppBar";
 import Button from "@mui/material/Button";
 import AppRoutes from "../AppRoute/AppRoute";
+import UserContext from "../Services/UserContext";
+
 const MenuBar = (props, children) => {
+  const { setUser } = useContext(UserContext);
+
   const navigate = useNavigate();
   const [loggedIn, setLoggedIn] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   useEffect(() => {
     if (localStorage.getItem("authenticated")) {
       setLoggedIn(true);
+      setUser(localStorage.getItem("userId"));
     }
     if (sessionStorage.getItem("authenticated")) {
       setLoggedIn(true);
+      setUser(sessionStorage.getItem("userId"));
     }
     setIsAdmin(
       sessionStorage.getItem("userType") === "1" ||
@@ -48,6 +54,9 @@ const MenuBar = (props, children) => {
   const onContactNavigate = () => {
     navigate("/contact");
   };
+  const onInvoicesNavigate = () => {
+    navigate("/invoices");
+  };
   return (
     <div>
       <AppBar position="static">
@@ -77,7 +86,11 @@ const MenuBar = (props, children) => {
               Dashboard
             </Button>
           )}
-          {!isAdmin && loggedIn && <Button color="inherit">Invoices</Button>}
+          {!isAdmin && loggedIn && (
+            <Button color="inherit" onClick={onInvoicesNavigate}>
+              Invoices
+            </Button>
+          )}
           {loggedIn && <Button color="inherit">Your account</Button>}
           {loggedIn && isAdmin && <Button color="inherit">Services</Button>}
           {loggedIn && !isAdmin && (
