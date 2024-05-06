@@ -28,6 +28,7 @@ const Invoices = () => {
       setInvoices(invoices);
     });
   };
+
   return (
     <Box
       display="flex"
@@ -36,51 +37,53 @@ const Invoices = () => {
       minHeight="100vh"
       sx={{ ml: 20, mr: 20 }}
     >
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell align="center">Invoice number</TableCell>
-              <TableCell align="center">Description</TableCell>
-              <TableCell align="center">Release Date</TableCell>
-              <TableCell align="center">Due date</TableCell>
-              <TableCell align="center">Price</TableCell>
-              <TableCell align="center">Status</TableCell>
-              <TableCell align="center" />
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {invoices.map((i) => (
-              <TableRow
-                key={i.id}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell align="center" component="th" scope="row">
-                  {i.invoiceNumber}
-                </TableCell>
-                <TableCell align="center">{i.description}</TableCell>
-                <TableCell align="center">{i.releaseDate}</TableCell>
-                <TableCell align="center">{i.dueDate}</TableCell>
-                <TableCell align="center">{i.sum}</TableCell>
-                <TableCell align="center">
-                  {i.isPaid === true ? "Paid" : "Unpaid"}
-                </TableCell>
-                <TableCell align="center">
-                  {i.isPaid === false && (
-                    <Button
-                      variant="outlined"
-                      size="small"
-                      onClick={() => onChangeStatus(i.id)}
-                    >
-                      Pay!
-                    </Button>
-                  )}
-                </TableCell>
+      <Paper elevation={24}>
+        <TableContainer>
+          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell align="center">Invoice number</TableCell>
+                <TableCell align="center">Description</TableCell>
+                <TableCell align="center">Release Date</TableCell>
+                <TableCell align="center">Due date</TableCell>
+                <TableCell align="center">Price</TableCell>
+                <TableCell align="center">Status</TableCell>
+                <TableCell align="center" />
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+            </TableHead>
+            <TableBody>
+              {invoices.map((i) => (
+                <TableRow
+                  key={i.id}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                >
+                  <TableCell align="center" component="th" scope="row">
+                    {i.invoiceNumber}
+                  </TableCell>
+                  <TableCell align="center">{i.description}</TableCell>
+                  <TableCell align="center">{i.releaseDate}</TableCell>
+                  <TableCell align="center">{i.dueDate}</TableCell>
+                  <TableCell align="center">{i.sum}</TableCell>
+                  <TableCell align="center">
+                    {i.isPaid === true ? "Paid" : "Unpaid"}
+                  </TableCell>
+                  <TableCell align="center">
+                    {i.isPaid === false && (
+                      <Button
+                        variant="outlined"
+                        size="small"
+                        onClick={() => onChangeStatus(i.id)}
+                      >
+                        Pay!
+                      </Button>
+                    )}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Paper>
     </Box>
   );
 };

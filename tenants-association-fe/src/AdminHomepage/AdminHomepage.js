@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -10,21 +11,16 @@ import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
-import ButtonGroup from "@mui/material/ButtonGroup";
+import Modal from "@mui/material/Modal";
+import AnnouncementForm from "../Announcement/AnnouncementForm";
+
 const AdminHomepage = () => {
   const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
-  function createData(name) {
-    return { name };
-  }
-
-  const rows = [
-    createData(
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-    ),
-  ];
   const onNavigateToAddInvoiceForm = () => {
-    debugger;
     navigate("/addinvoiceform");
   };
 
@@ -41,41 +37,65 @@ const AdminHomepage = () => {
                   </TableCell>
                 </TableRow>
               </TableHead>
-              <TableBody>
-                {rows.map((row) => (
-                  <TableRow
-                    key={row.name}
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  >
-                    <TableCell component="th" scope="row">
-                      {row.name}
-                    </TableCell>
-                    <TableCell align="right">{row.calories}</TableCell>
-                    <TableCell align="right">{row.fat}</TableCell>
-                    <TableCell align="right">{row.carbs}</TableCell>
-                    <TableCell align="right">{row.protein}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
+              <TableBody></TableBody>
             </Table>
           </TableContainer>
         </Grid>
         <Grid item xs={4}>
-          <ButtonGroup
+          <Grid
             container
-            spacing={20}
-            orientation="vertical"
-            aria-label="Vertical button group"
-            sx={{ mt: 10, ml: 4 }}
+            direction="column"
+            justifyContent="center"
+            columns={{ xs: 4, md: 12 }}
+            spacing={2}
           >
-            <Button onClick={onNavigateToAddInvoiceForm} key="one">
-              Add Invoices
-            </Button>
-            ,<Button key="two">Add poll</Button>,
-            <Button key="three">Add services</Button>,
-            <Button key="four">Send messages</Button>,
-            <Button key="five">Create user</Button>,
-          </ButtonGroup>
+            <Grid item>
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={onNavigateToAddInvoiceForm}
+              >
+                Add Invoices
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={handleOpen}
+              >
+                Add Announcement
+              </Button>
+              <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+              >
+                <AnnouncementForm handleClose={handleClose} />
+              </Modal>
+            </Grid>
+            <Grid item>
+              <Button variant="contained" color="secondary">
+                Add poll
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button color="secondary" variant="contained">
+                Add services
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button color="secondary" variant="contained">
+                Send messages
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button color="secondary" variant="contained">
+                Create user
+              </Button>
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
     </Box>

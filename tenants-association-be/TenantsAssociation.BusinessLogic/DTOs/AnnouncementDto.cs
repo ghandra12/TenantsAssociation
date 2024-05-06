@@ -11,8 +11,9 @@ namespace TenantsAssociation.BusinessLogic.DTOs
     public class AnnouncementDto
     {      
         public string Content { get; set; } = "";
-    
+        public string Title { get; set; } = "";
         [DataType(DataType.Date)]
         public DateTime Date { get; set; }
+        public DateTime ExpirationDate { get; set; }
     }
 }

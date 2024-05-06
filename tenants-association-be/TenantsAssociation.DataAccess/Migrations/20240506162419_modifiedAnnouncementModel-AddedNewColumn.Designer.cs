@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TenantsAssociation.DataAccess.Models;
 
@@ -11,9 +12,11 @@ using TenantsAssociation.DataAccess.Models;
 namespace TenantsAssociation.DataAccess.Migrations
 {
     [DbContext(typeof(TenantsAssociationDBContext))]
-    partial class TenantsAssociationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240506162419_modifiedAnnouncementModel-AddedNewColumn")]
+    partial class modifiedAnnouncementModelAddedNewColumn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -44,7 +47,12 @@ namespace TenantsAssociation.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Announcements");
                 });
@@ -123,6 +131,15 @@ namespace TenantsAssociation.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("TenantsAssociation.DataAccess.Models.Announcement", b =>
+                {
+                    b.HasOne("TenantsAssociation.DataAccess.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("TenantsAssociation.DataAccess.Models.Invoice", b =>

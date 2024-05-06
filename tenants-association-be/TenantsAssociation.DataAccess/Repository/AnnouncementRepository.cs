@@ -13,6 +13,11 @@ namespace TenantsAssociation.DataAccess.Repository
         {
 
         }
+        public List<Announcement> GetUnexpiredAnnouncements()
+        {
+            DateTime currentDate = DateTime.Today;
+            return GetAll().Where(a=>a.ExpirationDate>=currentDate).ToList();
+        }
 
     }
 }

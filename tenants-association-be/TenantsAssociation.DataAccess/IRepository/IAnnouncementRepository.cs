@@ -9,5 +9,6 @@ namespace TenantsAssociation.DataAccess.IRepository
 {
     public interface IAnnouncementRepository : IBaseRepository<Announcement>
     {
+        List<Announcement> GetUnexpiredAnnouncements();
     }
 }

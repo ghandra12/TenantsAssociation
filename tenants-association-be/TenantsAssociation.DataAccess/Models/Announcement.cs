@@ -11,10 +11,11 @@ namespace TenantsAssociation.DataAccess.Models
     {
         public int Id { get; set; }
         public string Content { get; set; } = "";
-        public int? UserId { get; set; }
-        public User? User { get; set; }
-
+        public string Title { get; set; } = "";
+     
         [DataType(DataType.Date)]
         public DateTime Date { get; set; }
+        public  DateTime ExpirationDate { get; set; }
+
     }
 }
