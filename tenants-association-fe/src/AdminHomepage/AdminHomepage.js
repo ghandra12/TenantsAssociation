@@ -23,6 +23,9 @@ const AdminHomepage = () => {
   const onNavigateToAddInvoiceForm = () => {
     navigate("/addinvoiceform");
   };
+  const onNavigateToAddUserForm = () => {
+    navigate("/adduserform");
+  };
 
   return (
     <Box sx={{ flexGrow: 1, mt: 10, ml: 4 }}>
@@ -91,7 +94,11 @@ const AdminHomepage = () => {
               </Button>
             </Grid>
             <Grid item>
-              <Button color="secondary" variant="contained">
+              <Button
+                color="secondary"
+                variant="contained"
+                onClick={onNavigateToAddUserForm}
+              >
                 Create user
               </Button>
             </Grid>

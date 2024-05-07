@@ -8,6 +8,7 @@ using TenantsAssociation.BusinessLogic.enums;
 using TenantsAssociation.BusinessLogic.IServices;
 using TenantsAssociation.DataAccess.IRepository;
 using TenantsAssociation.DataAccess.Models;
+using TenantsAssociation.DataAccess.Repository;
 
 namespace TenantsAssociation.BusinessLogic.Services
 {
@@ -67,6 +68,22 @@ namespace TenantsAssociation.BusinessLogic.Services
             }
            
         }
+        public async Task AddUser(UserDto userDto)
+        {
+            User user = new User()
+            {
+                FirstName = userDto.FirstName,
+                LastName = userDto.LastName,
+                PhoneNumber = userDto.PhoneNumber,
+                ApartmentNumber = userDto.ApartmentNumber,
+                IsAdmin = userDto.IsAdmin,
+                Email = userDto.Email,
+                Password = userDto.Password,
+            };
+            await _unitOfWork.Users.InsertAsync(user);
+            _unitOfWork.SaveChanges();
         }
     }
+
+}
 

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using TenantsAssociation.BusinessLogic.DTOs;
 using TenantsAssociation.BusinessLogic.enums;
 using TenantsAssociation.BusinessLogic.IServices;
+using TenantsAssociation.BusinessLogic.Services;
 using TenantsAssociation.DataAccess.IRepository;
 
 namespace tenants_association_be.Controllers
@@ -40,6 +41,12 @@ namespace tenants_association_be.Controllers
            
         }
 
+        [HttpPost]
+        [Route("adduser")]
+        public async Task AddUser([FromBody] UserDto userDto)
+        {
+            await _userService.AddUser(userDto);
+        }
 
     }
 }

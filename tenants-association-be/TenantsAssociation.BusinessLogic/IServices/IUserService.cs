@@ -12,5 +12,6 @@ namespace TenantsAssociation.BusinessLogic.IServices
     {
         LoginDto Login(UserDto user);
         List<UserDto> GetTenants();
+        Task AddUser(UserDto userDto);
     }
 }

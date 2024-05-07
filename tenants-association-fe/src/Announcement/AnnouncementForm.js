@@ -8,7 +8,7 @@ import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { Height } from "@mui/icons-material";
+
 const style = {
   position: "absolute",
   top: "50%",
@@ -103,7 +103,7 @@ const AnnouncementForm = (props) => {
                 onClick={onSubmitHandler}
                 variant="contained"
               >
-                Sent to tenants
+                Send to tenants
               </Button>
             </Grid>
           </Grid>
