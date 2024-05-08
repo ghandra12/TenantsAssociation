@@ -63,7 +63,9 @@ const AnnouncementForm = (props) => {
             }}
           >
             <Grid item xs={6}>
-              <Typography variant="h5">Add an announcement</Typography>
+              <Typography variant="h5" color="secondary">
+                Add an announcement
+              </Typography>
             </Grid>
             <Grid item xs={6}>
               <TextField

@@ -60,7 +60,9 @@ const PollForm = (props) => {
             }}
           >
             <Grid item xs={6}>
-              <Typography variant="h5">Create a poll</Typography>
+              <Typography variant="h5" color="secondary">
+                Create a poll
+              </Typography>
             </Grid>
             <Grid item xs={6}>
               <TextField
@@ -71,6 +73,11 @@ const PollForm = (props) => {
                 onChange={onChangeQuestionHandler}
                 size="small"
               />
+            </Grid>
+            <Grid item xs={6}>
+              <Typography variant="h5" color="secondary">
+                Add answers:
+              </Typography>
             </Grid>
             <Grid item xs={6}>
               {answers.map((answer, index) => (
