@@ -13,6 +13,7 @@ import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
 import AnnouncementForm from "../Announcement/AnnouncementForm";
+import PollForm from "../Poll/PollForm";
 
 const AdminHomepage = () => {
   const navigate = useNavigate();
@@ -79,9 +80,21 @@ const AdminHomepage = () => {
               </Modal>
             </Grid>
             <Grid item>
-              <Button variant="contained" color="secondary">
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={handleOpen}
+              >
                 Add poll
               </Button>
+              <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+              >
+                <PollForm handleClose={handleClose} />
+              </Modal>
             </Grid>
             <Grid item>
               <Button color="secondary" variant="contained">
