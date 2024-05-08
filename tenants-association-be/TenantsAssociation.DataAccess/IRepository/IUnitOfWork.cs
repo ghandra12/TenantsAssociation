@@ -9,6 +9,8 @@ namespace TenantsAssociation.DataAccess.IRepository
     public interface IUnitOfWork : IDisposable
     {
         IUserRepository Users { get;  }
+        IInvoiceRepository Invoices { get; }
+        IAnnouncementRepository Announcements { get; }
         int SaveChanges();
     }
 }

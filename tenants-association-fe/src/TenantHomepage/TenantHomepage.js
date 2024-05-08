@@ -1,4 +1,5 @@
-import * as React from "react";
+import React, { useContext, useState } from "react";
+import { useEffect } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -13,21 +14,30 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
-import getAnnounces from "../Services/announces-service";
+import API from "../Services/api";
+import UserContext from "../Services/UserContext";
+//import Button from "@mui/material/Button";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 const TenantHomepage = () => {
-  function createData(name, date) {
-    return { name, date };
-  }
+  const { user } = useContext(UserContext);
+  const [invoices, setInvoices] = useState([]);
+  const [announcements, setAnnouncements] = useState([]);
+  useEffect(() => {
+    if (user !== null) {
+      API.get(`Invoice/getunpaidinvoices/${user}`).then((response) => {
+        setInvoices(response.data);
+      });
 
-  const anouncements = getAnnounces();
-  const rows2 = [
-    createData("Gaze", "04.04.2024"),
-    createData("Intretinere", "01.02.2024"),
-    createData("Apa", "19.12.2023"),
-    createData("Curent", "04.02.2023"),
-    createData("Curent", "05.03.2024"),
-  ];
+      API.get("Announcement/getunexpiredannouncements").then((response) => {
+        setAnnouncements(response.data);
+      });
+    }
+  }, [user]);
+
   return (
     <Box sx={{ flexGrow: 1, mt: 7 }}>
       <Grid
@@ -37,34 +47,42 @@ const TenantHomepage = () => {
         alignItems="center"
         spacing={4}
       >
-        <Grid item>
+        <Grid item xs={6}>
           <Typography
             sx={{ flex: "1 1 100%" }}
             variant="h5"
             id="tableTitle"
             component="div"
           >
-            New announcements:
+            Announcements:
           </Typography>
-          <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
-              <TableBody>
-                {anouncements.map((anouncement) => (
-                  <TableRow
-                    key={anouncement.title}
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+          <div>
+            {announcements.map((announce) => {
+              return (
+                <Accordion>
+                  <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel2-content"
+                    id="panel2-header"
                   >
-                    <TableCell component="th" scope="row">
-                      {anouncement.title}
-                    </TableCell>
-                    <TableCell align="right">
-                      <a href="/details">Vezi mai multe</a>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+                    <Grid item xs={6}>
+                      <Typography>{announce.title}</Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <i>
+                        <Typography color="secondary">
+                          {announce.date.split("T")[0]}
+                        </Typography>
+                      </i>
+                    </Grid>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <Typography>{announce.content}</Typography>
+                  </AccordionDetails>
+                </Accordion>
+              );
+            })}
+          </div>
         </Grid>
         <Grid item>
           <Typography
@@ -78,15 +96,15 @@ const TenantHomepage = () => {
           <TableContainer component={Paper}>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
               <TableBody>
-                {rows2.map((row) => (
+                {invoices.map((invoice) => (
                   <TableRow
-                    key={row.name}
+                    key={invoice.id}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
                     <TableCell component="th" scope="row">
-                      {row.name}
+                      {invoice.description}
                     </TableCell>
-                    <TableCell align="right">{row.date}</TableCell>
+                    <TableCell align="right">{invoice.dueDate}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>

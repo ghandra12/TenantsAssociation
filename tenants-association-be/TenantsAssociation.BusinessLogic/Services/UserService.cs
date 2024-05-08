@@ -8,6 +8,7 @@ using TenantsAssociation.BusinessLogic.enums;
 using TenantsAssociation.BusinessLogic.IServices;
 using TenantsAssociation.DataAccess.IRepository;
 using TenantsAssociation.DataAccess.Models;
+using TenantsAssociation.DataAccess.Repository;
 
 namespace TenantsAssociation.BusinessLogic.Services
 {
@@ -19,24 +20,70 @@ namespace TenantsAssociation.BusinessLogic.Services
         {
             _unitOfWork = unitOfWork;
         }
-        
-        public LoginResult Login(UserDto user)
+
+        public List<UserDto> GetTenants()
+        {
+            List<User> users = _unitOfWork.Users.GetTenants();
+
+            var userDtos = users.Select(u => new UserDto()
+            {
+                Id=u.Id,
+                Name=u.FirstName + " " + u.LastName,
+                ApartmentNumber=u.ApartmentNumber
+
+
+            }).ToList();
+
+            return userDtos;
+        }
+
+        public LoginDto Login(UserDto user)
         {
           User ans = _unitOfWork.Users.VerifyUser(user.Email,user.Password);
             if (ans == null)
-                return LoginResult.UserNotFound;
+            {
+                var loginDto = new LoginDto() {
+                    UserId = ans.Id,
+                    LoginResult = LoginResult.UserNotFound
+                };
+             return loginDto;
+            }
             if (ans.IsAdmin == true)
             {
-                return LoginResult.LoggedInAsAdmin;
+                var loginDto = new LoginDto()
+                {
+                    UserId = ans.Id,
+                    LoginResult = LoginResult.LoggedInAsAdmin
+                };
+                return loginDto;
             }
             else 
             {
-                return LoginResult.LoggedInAsTenant;
+                var loginDto = new LoginDto()
+                {
+                    UserId = ans.Id,
+                    LoginResult = LoginResult.LoggedInAsTenant
+                };
+                return loginDto;
             }
            
-         
         }
-       
-
+        public async Task AddUser(UserDto userDto)
+        {
+            User user = new User()
+            {
+                FirstName = userDto.FirstName,
+                LastName = userDto.LastName,
+                PhoneNumber = userDto.PhoneNumber,
+                ApartmentNumber = userDto.ApartmentNumber,
+                IsAdmin = userDto.IsAdmin,
+                Email = userDto.Email,
+                Password = userDto.Password,
+            };
+            await _unitOfWork.Users.InsertAsync(user);
+            _unitOfWork.SaveChanges();
+        }
     }
+
 }
+

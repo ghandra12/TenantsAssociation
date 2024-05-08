@@ -19,6 +19,10 @@ namespace TenantsAssociation.DataAccess.Repository
         {
             return GetAll().Where(c => c.IsAdmin).ToList();
         }
+        public List<User> GetTenants()
+        {
+            return GetAll().Where(c => c.IsAdmin==false).ToList();
+        }
         public User VerifyUser(string email,string password)
         {
             return GetAll().SingleOrDefault(c => c.Email == email && c.Password == password);
