@@ -17,10 +17,12 @@ import PollForm from "../Poll/PollForm";
 
 const AdminHomepage = () => {
   const navigate = useNavigate();
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
+  const [openPoll, setOpenPoll] = useState(false);
+  const [openAnnounce, setOpenAnnounce] = useState(false);
+  const handleOpenPoll = () => setOpenPoll(true);
+  const handleOpenAnnounce = () => setOpenAnnounce(true);
+  const handleClosePoll = () => setOpenPoll(false);
+  const handleCloseAnnounce = () => setOpenAnnounce(false);
   const onNavigateToAddInvoiceForm = () => {
     navigate("/addinvoiceform");
   };
@@ -66,34 +68,34 @@ const AdminHomepage = () => {
               <Button
                 variant="contained"
                 color="secondary"
-                onClick={handleOpen}
+                onClick={handleOpenAnnounce}
               >
                 Add Announcement
               </Button>
               <Modal
-                open={open}
-                onClose={handleClose}
+                open={openAnnounce}
+                onClose={handleCloseAnnounce}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
               >
-                <AnnouncementForm handleClose={handleClose} />
+                <AnnouncementForm handleClose={handleCloseAnnounce} />
               </Modal>
             </Grid>
             <Grid item>
               <Button
                 variant="contained"
                 color="secondary"
-                onClick={handleOpen}
+                onClick={handleOpenPoll}
               >
                 Add poll
               </Button>
               <Modal
-                open={open}
-                onClose={handleClose}
+                open={openPoll}
+                onClose={handleClosePoll}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
               >
-                <PollForm handleClose={handleClose} />
+                <PollForm handleClose={handleClosePoll} />
               </Modal>
             </Grid>
             <Grid item>

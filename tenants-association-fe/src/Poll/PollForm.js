@@ -4,14 +4,14 @@ import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import API from "../Services/api";
-
+import Typography from "@mui/material/Typography";
 const style = {
   position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 450,
-  height: 450,
+  height: 500,
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
@@ -29,7 +29,9 @@ const PollForm = (props) => {
     setAnswers(newAnswers);
   };
   const handleAddAnswer = () => {
-    setAnswers([...answers, ""]);
+    if (answers.length < 4) {
+      setAnswers([...answers, ""]);
+    } else alert("You can add maximum 4 answers");
   };
   const onSubmitHandler = (event) => {
     event.preventDefault();
@@ -58,6 +60,9 @@ const PollForm = (props) => {
             }}
           >
             <Grid item xs={6}>
+              <Typography variant="h5">Create a poll</Typography>
+            </Grid>
+            <Grid item xs={6}>
               <TextField
                 id="outlined-basic"
                 label="Question"
@@ -69,14 +74,15 @@ const PollForm = (props) => {
             </Grid>
             <Grid item xs={6}>
               {answers.map((answer, index) => (
-                <Grid item xs={6} mt={2}>
+                <Grid item xs={12} mt={2} mb={2}>
                   <TextField
                     id="outlined-basic"
-                    label="Variant"
+                    label="Answer"
                     variant="outlined"
                     key={index}
                     type="text"
                     value={answer}
+                    size="small"
                     onChange={(e) => handleAnswerChange(e, index)}
                   />
                 </Grid>
@@ -87,7 +93,7 @@ const PollForm = (props) => {
                 variant="contained"
                 onClick={handleAddAnswer}
               >
-                Add Answer
+                +
               </Button>
             </Grid>
 

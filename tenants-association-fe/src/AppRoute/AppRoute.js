@@ -7,6 +7,7 @@ import Contact from "../Contact/Contact";
 import InvoiceForm from "../Invoice/InvoiceForm";
 import Invoices from "../Invoice/Invoices";
 import UserForm from "../UserForm/UserForm";
+import AnnouncementForm from "../Announcement/AnnouncementForm";
 const TenantProtectedRoute = ({ redirectPath = "/", children }) => {
   if (
     !localStorage.getItem("authenticated") &&
@@ -80,6 +81,15 @@ function AppRoutes({ loggedIn, setLoggedIn }) {
         element={
           <AdminProtectedRoute>
             <UserForm />
+          </AdminProtectedRoute>
+        }
+      />
+      <Route
+        exact
+        path="/addannouncement"
+        element={
+          <AdminProtectedRoute>
+            <AnnouncementForm />
           </AdminProtectedRoute>
         }
       />

@@ -8,7 +8,7 @@ import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-
+import Typography from "@mui/material/Typography";
 const style = {
   position: "absolute",
   top: "50%",
@@ -63,22 +63,24 @@ const AnnouncementForm = (props) => {
             }}
           >
             <Grid item xs={6}>
+              <Typography variant="h5">Add an announcement</Typography>
+            </Grid>
+            <Grid item xs={6}>
               <TextField
-                id="standard-basic"
+                id="outlined-basic"
                 label="Title"
-                variant="standard"
+                variant="outlined"
                 value={title}
                 onChange={onChangeTitleHandler}
-                size="small"
               />
             </Grid>
             <Grid item xs={6}>
               <TextField
-                id="standard-multiline-static"
+                id="outlined-multiline-static"
                 label="Description"
                 multiline
                 rows={4}
-                variant="standard"
+                variant="outlined"
                 value={description}
                 onChange={onChangeDescriptionHandler}
               />
