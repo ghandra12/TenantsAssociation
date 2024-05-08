@@ -28,7 +28,7 @@ const MenuBar = (props, children) => {
       sessionStorage.getItem("userType") === "1" ||
         localStorage.getItem("userType") === "1"
     );
-  }, []);
+  }, [setUser]);
 
   const logOutHandler = () => {
     localStorage.removeItem("authenticated");
