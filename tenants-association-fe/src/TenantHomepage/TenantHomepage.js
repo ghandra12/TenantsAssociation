@@ -104,7 +104,9 @@ const TenantHomepage = () => {
                     <TableCell component="th" scope="row">
                       {invoice.description}
                     </TableCell>
-                    <TableCell align="right">{invoice.dueDate}</TableCell>
+                    <TableCell align="right">
+                      {invoice.dueDate.split("T")[0]}
+                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
