@@ -55,7 +55,7 @@ const AdminHomepage = () => {
             columns={{ xs: 4, md: 12 }}
             spacing={2}
           >
-            <Grid item>
+            <Grid item xs={6}>
               <Button
                 variant="contained"
                 color="secondary"
@@ -64,7 +64,7 @@ const AdminHomepage = () => {
                 Add Invoices
               </Button>
             </Grid>
-            <Grid item>
+            <Grid item xs={6}>
               <Button
                 variant="contained"
                 color="secondary"
@@ -81,7 +81,7 @@ const AdminHomepage = () => {
                 <AnnouncementForm handleClose={handleCloseAnnounce} />
               </Modal>
             </Grid>
-            <Grid item>
+            <Grid item xs={6}>
               <Button
                 variant="contained"
                 color="secondary"
@@ -98,17 +98,17 @@ const AdminHomepage = () => {
                 <PollForm handleClose={handleClosePoll} />
               </Modal>
             </Grid>
-            <Grid item>
+            <Grid item xs={6}>
               <Button color="secondary" variant="contained">
                 Add services
               </Button>
             </Grid>
-            <Grid item>
+            <Grid item xs={6}>
               <Button color="secondary" variant="contained">
                 Send messages
               </Button>
             </Grid>
-            <Grid item>
+            <Grid item xs={6}>
               <Button
                 color="secondary"
                 variant="contained"
