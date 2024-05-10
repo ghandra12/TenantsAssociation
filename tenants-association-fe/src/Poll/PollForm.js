@@ -5,6 +5,12 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import API from "../Services/api";
 import Typography from "@mui/material/Typography";
+import InputAdornment from "@mui/material/InputAdornment";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+
 const style = {
   position: "absolute",
   top: "50%",
@@ -20,6 +26,11 @@ const style = {
 const PollForm = (props) => {
   const [question, setQuestion] = useState();
   const [answers, setAnswers] = useState(["", ""]);
+  const [expirationDate, setExpirationDate] = useState();
+
+  const onChangeExpirationDate = (event) => {
+    setExpirationDate(event);
+  };
   const onChangeQuestionHandler = (event) => {
     setQuestion(event.target.value);
   };
@@ -38,6 +49,8 @@ const PollForm = (props) => {
 
     API.post("Poll/addpoll", {
       question: question,
+      answers: answers,
+      expirationDate: expirationDate,
     }).then((response) => {
       props.handleClose();
     });
@@ -103,7 +116,18 @@ const PollForm = (props) => {
                 +
               </Button>
             </Grid>
-
+            <Grid item xs={6}>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DemoContainer components={["DatePicker"]}>
+                  <DatePicker
+                    sx={{ width: 225 }}
+                    label="Expiration date"
+                    value={expirationDate}
+                    onChange={onChangeExpirationDate}
+                  />
+                </DemoContainer>
+              </LocalizationProvider>
+            </Grid>
             <Grid item xs={6}>
               <Button
                 color="secondary"
