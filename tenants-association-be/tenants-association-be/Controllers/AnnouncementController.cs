@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using TenantsAssociation.BusinessLogic.DTOs;
 using TenantsAssociation.BusinessLogic.IServices;
 using TenantsAssociation.BusinessLogic.Services;
@@ -7,6 +8,7 @@ namespace tenants_association_be.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class AnnouncementController : ControllerBase
     {
         IAnnouncementService _announcementService;

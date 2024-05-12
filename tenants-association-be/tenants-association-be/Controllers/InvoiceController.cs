@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TenantsAssociation.BusinessLogic.DTOs;
 using TenantsAssociation.BusinessLogic.enums;
@@ -10,7 +11,8 @@ namespace tenants_association_be.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-  
+    [Authorize]
+
     public class InvoiceController : ControllerBase
     {
         IInvoiceService _invoiceService;
