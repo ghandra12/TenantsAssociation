@@ -11,7 +11,7 @@ using TenantsAssociation.DataAccess.Models;
 
 namespace TenantsAssociation.BusinessLogic.Services
 {
-    public class PollService
+    public class PollService:IPollService
     {
         IUnitOfWork _unitOfWork;
 
@@ -20,13 +20,15 @@ namespace TenantsAssociation.BusinessLogic.Services
             _unitOfWork = unitOfWork;
         }
 
-
         public async Task AddPoll(PollDto pollDto)
         {
             Poll poll = new Poll()
             {
                 Question = pollDto.Question,
-                Answers = pollDto.Answers,
+                Answers = pollDto.Answers.Select(a => new PollAnswer()
+                {
+                    Answer = a,
+                }).ToList(),
                 CreationDate = DateTime.Now,
                 ExpirationDate = pollDto.ExpirationDate,
             };
