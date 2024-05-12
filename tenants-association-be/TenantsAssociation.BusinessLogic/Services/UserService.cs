@@ -88,8 +88,8 @@ namespace TenantsAssociation.BusinessLogic.Services
                 ApartmentNumber = userDto.ApartmentNumber,
                 IsAdmin = userDto.IsAdmin,
                 Email = userDto.Email,
-
                 Password = hashed,
+                PaswordSalt=salt,
             };
             await _unitOfWork.Users.InsertAsync(user);
             _unitOfWork.SaveChanges();

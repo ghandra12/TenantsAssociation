@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using TenantsAssociation.DataAccess.IRepository;
@@ -21,11 +23,25 @@ namespace TenantsAssociation.DataAccess.Repository
         }
         public List<User> GetTenants()
         {
-            return GetAll().Where(c => c.IsAdmin==false).ToList();
+            return GetAll().Where(c => c.IsAdmin == false).ToList();
         }
-        public User VerifyUser(string email,string password)
+        public User? VerifyUser(string email, string password)
         {
-            return GetAll().SingleOrDefault(c => c.Email == email && c.Password == password);
+            User? user = GetAll().SingleOrDefault(c => c.Email == email);
+
+            if (user != null)
+            {
+                string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+                password: password!,
+                salt: user.PaswordSalt,
+                prf: KeyDerivationPrf.HMACSHA256,
+                iterationCount: 100000,
+                numBytesRequested: 256 / 8));
+
+                return user.Password == hashed ? user : null;
+            }
+
+            return null;
         }
     }
 
