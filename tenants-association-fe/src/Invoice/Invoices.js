@@ -61,7 +61,9 @@ const Invoices = () => {
                     {i.invoiceNumber}
                   </TableCell>
                   <TableCell align="center">{i.description}</TableCell>
-                  <TableCell align="center">{i.releaseDate}</TableCell>
+                  <TableCell align="center">
+                    {i.releaseDate.split("T")[0]}
+                  </TableCell>
                   <TableCell align="center">{i.dueDate}</TableCell>
                   <TableCell align="center">{i.sum}</TableCell>
                   <TableCell align="center">
