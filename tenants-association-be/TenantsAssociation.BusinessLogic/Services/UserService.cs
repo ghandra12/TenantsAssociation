@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using TenantsAssociation.BusinessLogic.DTOs;
@@ -70,6 +72,14 @@ namespace TenantsAssociation.BusinessLogic.Services
         }
         public async Task AddUser(UserDto userDto)
         {
+            byte[] salt = RandomNumberGenerator.GetBytes(128 / 8);
+            string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+            password: userDto.Password!,
+            salt: salt,
+            prf: KeyDerivationPrf.HMACSHA256,
+            iterationCount: 100000,
+            numBytesRequested: 256 / 8));
+
             User user = new User()
             {
                 FirstName = userDto.FirstName,
@@ -78,7 +88,8 @@ namespace TenantsAssociation.BusinessLogic.Services
                 ApartmentNumber = userDto.ApartmentNumber,
                 IsAdmin = userDto.IsAdmin,
                 Email = userDto.Email,
-                Password = userDto.Password,
+
+                Password = hashed,
             };
             await _unitOfWork.Users.InsertAsync(user);
             _unitOfWork.SaveChanges();
