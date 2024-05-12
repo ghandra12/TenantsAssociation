@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TenantsAssociation.BusinessLogic.DTOs;
 using TenantsAssociation.BusinessLogic.enums;
@@ -10,6 +11,7 @@ namespace tenants_association_be.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class UserController : ControllerBase
     {
         IUserService _userService;
@@ -19,6 +21,7 @@ namespace tenants_association_be.Controllers
             _userService = userService;
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public ActionResult<LoginDto> Login(UserDto user)
         {

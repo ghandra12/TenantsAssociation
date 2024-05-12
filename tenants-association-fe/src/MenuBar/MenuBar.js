@@ -33,6 +33,8 @@ const MenuBar = (props, children) => {
   const logOutHandler = () => {
     localStorage.removeItem("authenticated");
     sessionStorage.removeItem("authenticated");
+    localStorage.removeItem("token");
+    sessionStorage.removeItem("token");
     localStorage.removeItem("userType");
     sessionStorage.removeItem("userType");
     setLoggedIn(false);

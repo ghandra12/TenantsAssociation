@@ -14,7 +14,7 @@ namespace TenantsAssociation.DataAccess.Repository
         private IUserRepository? usersRepository;
         private IInvoiceRepository? invoicesRepository;
         private IAnnouncementRepository? announcementRepository;
-
+        private IPollRepository? pollRepository;
         public UnitOfWork(TenantsAssociationDBContext dbContext)
         {
             db = dbContext;
@@ -50,6 +50,17 @@ namespace TenantsAssociation.DataAccess.Repository
                     this.announcementRepository = new AnnouncementRepository(db);
                 }
                 return this.announcementRepository;
+            }
+        }
+        public IPollRepository Polls
+        {
+            get
+            {
+                if (this.pollRepository == null)
+                {
+                    this.pollRepository = new PollRepository(db);
+                }
+                return this.pollRepository;
             }
         }
         public int SaveChanges()

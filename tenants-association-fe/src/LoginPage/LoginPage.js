@@ -40,10 +40,12 @@ const LoginPage = (props) => {
           localStorage.setItem("authenticated", true);
           localStorage.setItem("userType", response.data.loginResult);
           localStorage.setItem("userId", response.data.userId);
+          localStorage.setItem("token", response.data.token);
         } else {
           sessionStorage.setItem("authenticated", true);
           sessionStorage.setItem("userType", response.data.loginResult);
           sessionStorage.setItem("userId", response.data.userId);
+          sessionStorage.setItem("token", response.data.token);
         }
         props.setLoggedIn(true);
 

@@ -9,7 +9,8 @@ namespace TenantsAssociation.BusinessLogic.DTOs
 {
    public class LoginDto
     {
-      public int UserId { get; set; }
-      public LoginResult LoginResult { get; set; }  
+      public int? UserId { get; set; }
+      public LoginResult LoginResult { get; set; }
+      public string? Token { get; set; } 
     }
 }
