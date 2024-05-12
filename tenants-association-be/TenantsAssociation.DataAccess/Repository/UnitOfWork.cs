@@ -15,6 +15,7 @@ namespace TenantsAssociation.DataAccess.Repository
         private IInvoiceRepository? invoicesRepository;
         private IAnnouncementRepository? announcementRepository;
         private IPollRepository? pollRepository;
+        
         public UnitOfWork(TenantsAssociationDBContext dbContext)
         {
             db = dbContext;

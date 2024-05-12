@@ -36,5 +36,13 @@ namespace TenantsAssociation.BusinessLogic.Services
             await _unitOfWork.Polls.InsertAsync(poll);
             _unitOfWork.SaveChanges();
         }
+        public PollDto? GetPoll()
+        {
+
+
+            Poll? poll = _unitOfWork.Polls.GetUnexpiredPoll();
+           
+
+        }
     }
 }

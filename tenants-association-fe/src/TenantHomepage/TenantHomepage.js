@@ -26,9 +26,15 @@ const TenantHomepage = () => {
   const { user } = useContext(UserContext);
   const [invoices, setInvoices] = useState([]);
   const [announcements, setAnnouncements] = useState([]);
+  const [question, setQuestion] = useState("");
+  const [answers, setAnswers] = useState([]);
+
   useEffect(() => {
     if (user !== null) {
       API.get(`Invoice/getunpaidinvoices/${user}`).then((response) => {
+        setInvoices(response.data);
+      });
+      API.get("Poll/getpoll").then((response) => {
         setInvoices(response.data);
       });
 

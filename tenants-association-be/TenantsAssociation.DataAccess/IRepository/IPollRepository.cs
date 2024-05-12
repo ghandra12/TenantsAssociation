@@ -9,5 +9,7 @@ namespace TenantsAssociation.DataAccess.IRepository
 {
     public interface IPollRepository: IBaseRepository<Poll>
     {
+        Poll? GetUnexpiredPoll();
     }
+  
 }
