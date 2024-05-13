@@ -9,6 +9,7 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { PieChart } from "@mui/x-charts";
+import { BarChart } from "@mui/x-charts/BarChart";
 
 const PollsHistory = () => {
   const [polls, setPolls] = useState();
@@ -54,7 +55,7 @@ const PollsHistory = () => {
                   <PieChart
                     series={[
                       {
-                        data: poll.answers?.map((a) => {
+                        data: poll?.answers?.map((a) => {
                           return {
                             id: a.id,
                             value: a.count,
