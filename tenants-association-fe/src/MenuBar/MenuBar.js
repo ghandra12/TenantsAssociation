@@ -44,6 +44,9 @@ const MenuBar = (props, children) => {
   const onNavigateToNeedHelp = () => {
     navigate("/needHelp");
   };
+  const onNavigateToPollsHistory = () => {
+    navigate("/pollshistory");
+  };
   const onDashboardNavigate = () => {
     if (isAdmin) navigate("/adminhome");
     else navigate("/tenanthome");
@@ -98,6 +101,11 @@ const MenuBar = (props, children) => {
           {loggedIn && !isAdmin && (
             <Button color="inherit" onClick={onContactNavigate}>
               Contact
+            </Button>
+          )}
+          {loggedIn && (
+            <Button color="inherit" onClick={onNavigateToPollsHistory}>
+              Polls history
             </Button>
           )}
           {loggedIn && (

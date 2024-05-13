@@ -15,5 +15,6 @@ namespace TenantsAssociation.BusinessLogic.DTOs
 
         [DataType(DataType.Date)]
         public DateTime ExpirationDate { get; set; }
+        public DateTime CreationDate { get; set; }
     }
 }

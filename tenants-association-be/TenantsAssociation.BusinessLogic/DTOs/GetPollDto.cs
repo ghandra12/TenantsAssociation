@@ -5,17 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TenantsAssociation.DataAccess.Models
+namespace TenantsAssociation.BusinessLogic.DTOs
 {
-    public class Poll
+    public class GetPollDto
     {
-        public int Id { get; set; }
         public string Question { get; set; } = " ";
-        public ICollection<PollAnswer> Answers { get; set; }
+        public List<PollAnswerDto> Answers { get; set; }
 
         [DataType(DataType.Date)]
-        public DateTime CreationDate { get; set; }
         public DateTime ExpirationDate { get; set; }
-      
+        public DateTime CreationDate { get; set; }
     }
 }

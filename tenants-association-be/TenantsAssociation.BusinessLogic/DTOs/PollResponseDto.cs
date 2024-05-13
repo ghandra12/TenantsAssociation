@@ -7,11 +7,8 @@ using TenantsAssociation.DataAccess.Models;
 
 namespace TenantsAssociation.BusinessLogic.DTOs
 {
-    public class PollAnswerDto
+    public class PollResponseDto
     {
-        public string Answer { get; set; } = "";
-        public int Id { get; set; }
-        public int Count { get; set; }
-
+        public PollAnswer PollAnswer { get; set; }
     }
 }

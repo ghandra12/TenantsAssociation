@@ -16,12 +16,18 @@ namespace TenantsAssociation.DataAccess.Repository
         {
 
         }
-        public Poll? GetUnexpiredPoll()
+        public Poll? GetUnexpiredPoll(int userId)
         {
-            return GetAll().Include(a => a.Answers).Where(a => a.ExpirationDate >= DateTime.Now).OrderBy(p => p.ExpirationDate).FirstOrDefault();
+            return GetAll().Include(a => a.Answers).ThenInclude(a => a.Responses)
+                .Where(a => a.ExpirationDate >= DateTime.Now && !a.Answers.Any(a => a.Responses.Any(r => r.UserId == userId)))
+                .OrderBy(p => p.ExpirationDate)
+                .FirstOrDefault();
+           
+        }
+        public List<Poll> GetAllPolls()
+        {
+            return GetAll().Include(a => a.Answers).ThenInclude(a => a.Responses).OrderByDescending(p => p.ExpirationDate).ToList();   
         }
 
     }
-
-
 }

@@ -16,18 +16,20 @@ import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import API from "../Services/api";
 import UserContext from "../Services/UserContext";
-//import Button from "@mui/material/Button";
+import Button from "@mui/material/Button";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-
+import { PieChart } from "@mui/x-charts";
 const TenantHomepage = () => {
   const { user } = useContext(UserContext);
   const [invoices, setInvoices] = useState([]);
   const [announcements, setAnnouncements] = useState([]);
   const [question, setQuestion] = useState("");
   const [answers, setAnswers] = useState([]);
+  const [expirationDate, setExpirationDate] = useState("");
+  const [pollResponse, setPollResponse] = useState();
 
   useEffect(() => {
     if (user !== null) {
@@ -35,7 +37,9 @@ const TenantHomepage = () => {
         setInvoices(response.data);
       });
       API.get("Poll/getpoll").then((response) => {
-        setInvoices(response.data);
+        setQuestion(response.data.question);
+        setAnswers(response.data.answers);
+        setExpirationDate(response.data.expirationDate);
       });
 
       API.get("Announcement/getunexpiredannouncements").then((response) => {
@@ -44,8 +48,25 @@ const TenantHomepage = () => {
     }
   }, [user]);
 
+  const onChangeResponseHandler = (event) => {
+    setPollResponse(parseInt(event.target.value));
+  };
+  const onSubmitPollHandler = () => {
+    API.post(
+      "Poll/addpollanswer",
+      answers.find((a) => a.id === pollResponse)
+    ).then((response) => {
+      API.get("Poll/getpoll").then((response) => {
+        setQuestion(response.data.question);
+        setAnswers(response.data.answers);
+        setExpirationDate(response.data.expirationDate);
+      });
+      alert("Your answer was registered");
+    });
+  };
+
   return (
-    <Box sx={{ flexGrow: 1, mt: 7 }}>
+    <Box sx={{ flexGrow: 1, mt: 7, marginRight: 10 }}>
       <Grid
         container
         direction="row"
@@ -59,6 +80,7 @@ const TenantHomepage = () => {
             variant="h5"
             id="tableTitle"
             component="div"
+            color="primary"
           >
             Announcements:
           </Typography>
@@ -96,6 +118,7 @@ const TenantHomepage = () => {
             variant="h5"
             id="tableTitle"
             component="div"
+            color="primary"
           >
             Unpaid invoices:
           </Typography>
@@ -124,33 +147,92 @@ const TenantHomepage = () => {
         container
         direction="row"
         justifyContent="center"
-        alignItems="center"
+        alignItems="right"
         spacing={4}
-        sx={{ mt: 7 }}
+        sx={{ mt: 7, mb: 10, ml: 3 }}
+        paddingBottom={2}
+        border={1}
+        borderColor="green"
       >
-        <Grid item>
+        <Grid item xs={6}>
+          <Typography
+            sx={{ flex: "1 1 100%" }}
+            variant="h5"
+            component="div"
+            mb={2}
+            color="primary"
+          >
+            Active poll:
+          </Typography>
+          {question !== undefined && (
+            <Typography
+              sx={{ flex: "1 1 100%" }}
+              id="tableTitle"
+              component="div"
+              mb={2}
+              color="secondary"
+            >
+              You can send your answer until {expirationDate?.split("T")[0]}.
+            </Typography>
+          )}
           <FormControl>
             <FormLabel id="demo-radio-buttons-group-label">
-              La ce ora sa vina deratizarea?
+              {question !== undefined
+                ? question
+                : "There is no poll available."}
             </FormLabel>
             <RadioGroup
               aria-labelledby="demo-radio-buttons-group-label"
-              defaultValue="female"
               name="radio-buttons-group"
             >
-              <FormControlLabel
-                value="female"
-                control={<Radio />}
-                label="8:30"
-              />
-              <FormControlLabel value="male" control={<Radio />} label="9:00" />
-              <FormControlLabel
-                value="other"
-                control={<Radio />}
-                label="9:30"
-              />
+              {answers?.map((answer) => {
+                return (
+                  <FormControlLabel
+                    value={answer.answer}
+                    key={answer.id}
+                    control={
+                      <Radio
+                        checked={pollResponse === answer.id}
+                        onChange={onChangeResponseHandler}
+                        value={answer.id}
+                      />
+                    }
+                    label={answer.answer}
+                  />
+                );
+              })}
             </RadioGroup>
+            {question !== undefined && (
+              <Button
+                color="secondary"
+                variant="contained"
+                size="small"
+                onClick={onSubmitPollHandler}
+              >
+                Send answer
+              </Button>
+            )}
           </FormControl>
+        </Grid>
+
+        <Grid item xs={6}>
+          {question !== undefined && (
+            <PieChart
+              series={[
+                {
+                  data: answers.map((a) => {
+                    return {
+                      id: a.id,
+                      value: a.count,
+                      label: a.answer,
+                    };
+                  }),
+                },
+              ]}
+              width={400}
+              height={200}
+            />
+          )}
         </Grid>
       </Grid>
     </Box>

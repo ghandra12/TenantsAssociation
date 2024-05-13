@@ -9,6 +9,7 @@ namespace TenantsAssociation.DataAccess.Models
         public DbSet <Announcement> Announcements { get; set; }
         public DbSet<Poll> Polls { get; set; }
         public DbSet<PollAnswer> Answers { get; set; }
+        public DbSet<PollResponse> Responses { get; set; }
         public TenantsAssociationDBContext(DbContextOptions<TenantsAssociationDBContext> options) : base(options)
         { }
     }
