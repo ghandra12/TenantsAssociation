@@ -7,10 +7,7 @@ using TenantsAssociation.DataAccess.Models;
 
 namespace TenantsAssociation.DataAccess.IRepository
 {
-    public interface IPollRepository: IBaseRepository<Poll>
+    public interface IMessageRepository:IBaseRepository<Message>
     {
-        Poll? GetUnexpiredPoll(int userId);
-        public List<Poll> GetAllPolls();
     }
-  
 }

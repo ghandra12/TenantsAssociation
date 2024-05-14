@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TenantsAssociation.DataAccess.Models;
 
@@ -11,9 +12,11 @@ using TenantsAssociation.DataAccess.Models;
 namespace TenantsAssociation.DataAccess.Migrations
 {
     [DbContext(typeof(TenantsAssociationDBContext))]
-    partial class TenantsAssociationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240512150947_updatePollModel")]
+    partial class updatePollModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -86,26 +89,6 @@ namespace TenantsAssociation.DataAccess.Migrations
                     b.ToTable("Invoices");
                 });
 
-            modelBuilder.Entity("TenantsAssociation.DataAccess.Models.Message", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Messages");
-                });
-
             modelBuilder.Entity("TenantsAssociation.DataAccess.Models.Poll", b =>
                 {
                     b.Property<int>("Id")
@@ -148,30 +131,7 @@ namespace TenantsAssociation.DataAccess.Migrations
 
                     b.HasIndex("PollId");
 
-                    b.ToTable("Answers");
-                });
-
-            modelBuilder.Entity("TenantsAssociation.DataAccess.Models.PollResponse", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("PollAnswerId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PollAnswerId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Responses");
+                    b.ToTable("PollAnswer");
                 });
 
             modelBuilder.Entity("TenantsAssociation.DataAccess.Models.User", b =>
@@ -204,10 +164,6 @@ namespace TenantsAssociation.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte[]>("PaswordSalt")
-                        .IsRequired()
-                        .HasColumnType("varbinary(max)");
-
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -237,33 +193,9 @@ namespace TenantsAssociation.DataAccess.Migrations
                     b.Navigation("Poll");
                 });
 
-            modelBuilder.Entity("TenantsAssociation.DataAccess.Models.PollResponse", b =>
-                {
-                    b.HasOne("TenantsAssociation.DataAccess.Models.PollAnswer", "PollAnswer")
-                        .WithMany("Responses")
-                        .HasForeignKey("PollAnswerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TenantsAssociation.DataAccess.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("PollAnswer");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("TenantsAssociation.DataAccess.Models.Poll", b =>
                 {
                     b.Navigation("Answers");
-                });
-
-            modelBuilder.Entity("TenantsAssociation.DataAccess.Models.PollAnswer", b =>
-                {
-                    b.Navigation("Responses");
                 });
 #pragma warning restore 612, 618
         }

@@ -10,7 +10,8 @@ namespace TenantsAssociation.DataAccess.Models
     {
         public int Id { get; set; }
         public string Answer { get; set; } = "";
-        public int? PollId { get; set; }
-        public Poll? Poll { get; set; }
+        public int PollId { get; set; }
+        public Poll Poll { get; set; } = null!;
+        public ICollection<PollResponse> Responses { get; set; } = null!;
     }
 }

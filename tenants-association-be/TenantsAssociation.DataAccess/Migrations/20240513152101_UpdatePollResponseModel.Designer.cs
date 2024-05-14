@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TenantsAssociation.DataAccess.Models;
 
@@ -11,9 +12,11 @@ using TenantsAssociation.DataAccess.Models;
 namespace TenantsAssociation.DataAccess.Migrations
 {
     [DbContext(typeof(TenantsAssociationDBContext))]
-    partial class TenantsAssociationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240513152101_UpdatePollResponseModel")]
+    partial class UpdatePollResponseModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -84,26 +87,6 @@ namespace TenantsAssociation.DataAccess.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Invoices");
-                });
-
-            modelBuilder.Entity("TenantsAssociation.DataAccess.Models.Message", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Messages");
                 });
 
             modelBuilder.Entity("TenantsAssociation.DataAccess.Models.Poll", b =>
@@ -240,7 +223,7 @@ namespace TenantsAssociation.DataAccess.Migrations
             modelBuilder.Entity("TenantsAssociation.DataAccess.Models.PollResponse", b =>
                 {
                     b.HasOne("TenantsAssociation.DataAccess.Models.PollAnswer", "PollAnswer")
-                        .WithMany("Responses")
+                        .WithMany()
                         .HasForeignKey("PollAnswerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -259,11 +242,6 @@ namespace TenantsAssociation.DataAccess.Migrations
             modelBuilder.Entity("TenantsAssociation.DataAccess.Models.Poll", b =>
                 {
                     b.Navigation("Answers");
-                });
-
-            modelBuilder.Entity("TenantsAssociation.DataAccess.Models.PollAnswer", b =>
-                {
-                    b.Navigation("Responses");
                 });
 #pragma warning restore 612, 618
         }

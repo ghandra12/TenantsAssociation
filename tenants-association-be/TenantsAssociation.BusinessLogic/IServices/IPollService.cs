@@ -10,5 +10,8 @@ namespace TenantsAssociation.BusinessLogic.IServices
     public interface IPollService
     {
        public Task AddPoll(PollDto pollDto);
+        public GetPollDto? GetPoll(int userId);
+        public List<GetPollDto> GetAllPolls();
+        public Task AddPollResponse(PollAnswerDto pollAnswerDto, int id);
     }
 }

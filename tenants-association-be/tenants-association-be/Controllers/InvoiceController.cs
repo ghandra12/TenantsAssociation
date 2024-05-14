@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using TenantsAssociation.BusinessLogic.DTOs;
 using TenantsAssociation.BusinessLogic.enums;
 using TenantsAssociation.BusinessLogic.IServices;

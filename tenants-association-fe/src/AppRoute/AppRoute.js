@@ -8,6 +8,7 @@ import InvoiceForm from "../Invoice/InvoiceForm";
 import Invoices from "../Invoice/Invoices";
 import UserForm from "../UserForm/UserForm";
 import AnnouncementForm from "../Announcement/AnnouncementForm";
+import PollsHistory from "../Poll/PollsHistory";
 const TenantProtectedRoute = ({ redirectPath = "/", children }) => {
   if (
     !localStorage.getItem("authenticated") &&
@@ -30,6 +31,22 @@ const AdminProtectedRoute = ({ redirectPath = "/", children }) => {
     return <Navigate to={redirectPath} replace />;
   }
   if (
+    localStorage.getItem("userType") === "1" ||
+    sessionStorage.getItem("userType") === "1"
+  )
+    return children;
+  return <Navigate to={redirectPath} replace />;
+};
+const CommonProtectedRoute = ({ redirectPath = "/", children }) => {
+  if (
+    !localStorage.getItem("authenticated") &&
+    !sessionStorage.getItem("authenticated")
+  ) {
+    return <Navigate to={redirectPath} replace />;
+  }
+  if (
+    localStorage.getItem("userType") === "2" ||
+    sessionStorage.getItem("userType") === "2" ||
     localStorage.getItem("userType") === "1" ||
     sessionStorage.getItem("userType") === "1"
   )
@@ -91,6 +108,15 @@ function AppRoutes({ loggedIn, setLoggedIn }) {
           <AdminProtectedRoute>
             <AnnouncementForm />
           </AdminProtectedRoute>
+        }
+      />
+      <Route
+        exact
+        path="/pollshistory"
+        element={
+          <CommonProtectedRoute>
+            <PollsHistory />
+          </CommonProtectedRoute>
         }
       />
       <Route

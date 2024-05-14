@@ -11,9 +11,10 @@ namespace TenantsAssociation.BusinessLogic.DTOs
     public class PollDto
     {
         public string Question { get; set; } = " ";
-        public ICollection<PollAnswer> Answers { get; set; }
+        public List<string> Answers { get; set; }
 
         [DataType(DataType.Date)]
         public DateTime ExpirationDate { get; set; }
+        public DateTime CreationDate { get; set; }
     }
 }

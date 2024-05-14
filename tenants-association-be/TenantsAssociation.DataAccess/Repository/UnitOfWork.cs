@@ -15,9 +15,22 @@ namespace TenantsAssociation.DataAccess.Repository
         private IInvoiceRepository? invoicesRepository;
         private IAnnouncementRepository? announcementRepository;
         private IPollRepository? pollRepository;
+        private IPollResponseRepository? pollResponseRepository;    
+        private IMessageRepository? messageRepository;
         public UnitOfWork(TenantsAssociationDBContext dbContext)
         {
             db = dbContext;
+        }
+        public IMessageRepository Messages
+        {
+            get
+            {
+                if (this.messageRepository == null)
+                {
+                    this.messageRepository = new MessageRepository(db);
+                }
+                return this.messageRepository;
+            }
         }
         public IUserRepository Users
         {
@@ -61,6 +74,17 @@ namespace TenantsAssociation.DataAccess.Repository
                     this.pollRepository = new PollRepository(db);
                 }
                 return this.pollRepository;
+            }
+        }
+        public IPollResponseRepository Responses
+        {
+            get
+            {
+                if (this.pollResponseRepository == null)
+                {
+                    this.pollResponseRepository = new PollResponseRepository(db);
+                }
+                return this.pollResponseRepository;
             }
         }
         public int SaveChanges()
