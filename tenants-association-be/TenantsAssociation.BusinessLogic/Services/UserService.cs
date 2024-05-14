@@ -38,8 +38,6 @@ namespace TenantsAssociation.BusinessLogic.Services
                 Id=u.Id,
                 Name=u.FirstName + " " + u.LastName,
                 ApartmentNumber=u.ApartmentNumber
-
-
             }).ToList();
 
             return userDtos;
