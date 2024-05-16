@@ -25,7 +25,7 @@ const YourAccount = () => {
     if (email < 8) {
       alert("Email should have at least 8 characters!");
     } else {
-      API.put("user/updateUserEmail", email, {
+      API.put("user/updateUserEmail", JSON.stringify(email), {
         headers: {
           "Content-Type": "application/json",
         },
@@ -39,7 +39,7 @@ const YourAccount = () => {
     if (password < 8) {
       alert("Password should have at least 8 characters!");
     } else {
-      API.put("user/updateUserPassword", password, {
+      API.put("user/updateUserPassword", JSON.stringify(password), {
         headers: {
           "Content-Type": "application/json",
         },
