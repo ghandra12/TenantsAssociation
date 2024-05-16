@@ -37,7 +37,7 @@ namespace tenants_association_be.Controllers
         }
         [HttpPost]
         [Route("addinvoice")]
-        public async Task AddInvoice([FromBody]  InvoiceDto invoiceDto)
+        public async Task AddInvoice([FromBody] InvoiceDto invoiceDto)
         {
            await _invoiceService.AddInvoice(invoiceDto);
         }

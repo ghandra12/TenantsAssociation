@@ -9,8 +9,8 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import API from "../Services/api";
 import UserContext from "../Services/UserContext";
 const LoginPage = (props) => {
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [remember, setRemember] = useState();
   const { setUser } = useContext(UserContext);
 
@@ -58,7 +58,7 @@ const LoginPage = (props) => {
         }
       })
       .catch((error) => {
-        alert("Something is wrong. Try again!");
+        alert(error.response.data);
       });
   };
   const rememberMeHandler = (event) => {

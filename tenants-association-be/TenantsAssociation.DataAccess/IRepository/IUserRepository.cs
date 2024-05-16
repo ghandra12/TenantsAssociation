@@ -14,5 +14,6 @@ namespace TenantsAssociation.DataAccess.IRepository
         List<User> GetAdministrators();
         List<User> GetTenants();
         User? VerifyUser(string email, string password);
+        User? GetById(int userId);
     }
 }

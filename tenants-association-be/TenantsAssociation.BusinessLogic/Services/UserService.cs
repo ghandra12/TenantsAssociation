@@ -47,7 +47,12 @@ namespace TenantsAssociation.BusinessLogic.Services
 
         public LoginDto Login(UserDto user)
         {
-          User dbUser = _unitOfWork.Users.VerifyUser(user.Email,user.Password);
+            if(user.Email.Length < 8 || user.Password.Length < 8)
+            {
+                throw new ArgumentException("Email and password should have a length bigger than 8!");
+            }
+
+            User dbUser = _unitOfWork.Users.VerifyUser(user.Email,user.Password);
 
             if (dbUser == null)
             {
@@ -84,8 +89,41 @@ namespace TenantsAssociation.BusinessLogic.Services
             }
            
         }
+
+        public void UpdateUserPassword(int userId, string newPassword)
+        {
+            if(newPassword.Length < 8)
+            {
+                throw new ArgumentException("Password should be longer than 7 characters");
+            }
+
+            var user = _unitOfWork.Users.GetById(userId);
+
+            if(user == null)
+            {
+                throw new InvalidOperationException("User not found");
+            }
+
+            byte[] salt = RandomNumberGenerator.GetBytes(128 / 8);
+            string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+            password: newPassword,
+            salt: salt,
+            prf: KeyDerivationPrf.HMACSHA256,
+            iterationCount: 100000,
+            numBytesRequested: 256 / 8));
+
+            user.PaswordSalt = salt;
+            user.Password = hashed;
+            _unitOfWork.Users.Update(user);
+            _unitOfWork.SaveChanges();
+        }
         public async Task AddUser(UserDto userDto)
         {
+            if (userDto.Email.Length < 8 || userDto.Password.Length < 8)
+            {
+                throw new ArgumentException("Email and password should have a length bigger than 8!");
+            }
+
             byte[] salt = RandomNumberGenerator.GetBytes(128 / 8);
             string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
             password: userDto.Password!,
@@ -136,6 +174,25 @@ namespace TenantsAssociation.BusinessLogic.Services
             var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
 
             return encodedJwt;
+        }
+
+        public void UpdateUserEmail(int userId, string email)
+        {
+            if (email.Length < 8)
+            {
+                throw new ArgumentException("Email should be longer than 7 characters");
+            }
+
+            var user = _unitOfWork.Users.GetById(userId);
+
+            if (user == null)
+            {
+                throw new InvalidOperationException("User not found");
+            }
+
+            user.Email = email;
+            _unitOfWork.Users.Update(user);
+            _unitOfWork.SaveChanges();
         }
     }
 
