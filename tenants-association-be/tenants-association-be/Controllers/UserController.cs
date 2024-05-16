@@ -55,11 +55,11 @@ namespace tenants_association_be.Controllers
 
         [HttpPut]
         [Route("updateUserPassword")]
-        public void UpdateUserPassword([FromBody] string newPassword)
+        public void UpdateUserPassword([FromBody] string password)
         {
             var usr = this.User;
             int userId = Int32.Parse(usr.Claims.FirstOrDefault(i => i.Type == ClaimTypes.NameIdentifier).Value);
-            _userService.UpdateUserPassword(userId, newPassword);
+            _userService.UpdateUserPassword(userId, password);
         }
 
         [HttpPut]
