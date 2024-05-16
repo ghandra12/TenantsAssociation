@@ -9,6 +9,7 @@ import Invoices from "../Invoice/Invoices";
 import UserForm from "../UserForm/UserForm";
 import AnnouncementForm from "../Announcement/AnnouncementForm";
 import PollsHistory from "../Poll/PollsHistory";
+import YourAccount from "../YourAccount/YourAccount";
 const TenantProtectedRoute = ({ redirectPath = "/", children }) => {
   if (
     !localStorage.getItem("authenticated") &&
@@ -116,6 +117,15 @@ function AppRoutes({ loggedIn, setLoggedIn }) {
         element={
           <CommonProtectedRoute>
             <PollsHistory />
+          </CommonProtectedRoute>
+        }
+      />
+      <Route
+        exact
+        path="/youraccount"
+        element={
+          <CommonProtectedRoute>
+            <YourAccount />
           </CommonProtectedRoute>
         }
       />

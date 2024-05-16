@@ -29,5 +29,24 @@ namespace tenants_association_be.Controllers
             int id = Int32.Parse(usr.Claims.FirstOrDefault(i => i.Type == ClaimTypes.NameIdentifier).Value);
             await _messageService.AddMessage(messageDto,id);
         }
+        [HttpGet]
+        [Route("getallmessages")]
+        public ActionResult<List<GetMessagesDto>> GetAllMessages()
+        {
+            return _messageService.GetAllMessages();
+            
+        }
+        [HttpPut]
+        [Route("readmessage/{messageId}")]
+        public void UpdateMessageReadStatus(int messageId)
+        {
+            _messageService.UpdateMessageReadStatus(messageId);
+        }
+        [HttpPut]
+        [Route("deletemessage/{messageId}")]
+        public void DeleteMessage(int messageId)
+        {
+            _messageService.DeleteMessage(messageId);
+        }
     }
 }

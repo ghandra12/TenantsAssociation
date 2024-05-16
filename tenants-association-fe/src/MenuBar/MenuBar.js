@@ -41,9 +41,9 @@ const MenuBar = (props, children) => {
     navigate("/");
   };
 
-  const onNavigateToNeedHelp = () => {
-    navigate("/needHelp");
-  };
+  // const onNavigateToNeedHelp = () => {
+  //   navigate("/needHelp");
+  // };
   const onNavigateToPollsHistory = () => {
     navigate("/pollshistory");
   };
@@ -61,6 +61,9 @@ const MenuBar = (props, children) => {
   };
   const onInvoicesNavigate = () => {
     navigate("/invoices");
+  };
+  const onNavigateToYourAccount = () => {
+    navigate("/youraccount");
   };
   return (
     <div>
@@ -81,11 +84,7 @@ const MenuBar = (props, children) => {
           >
             TenantsAssociation
           </Typography>
-          {!loggedIn && (
-            <Button color="inherit" onClick={onNavigateToNeedHelp}>
-              Need Help?
-            </Button>
-          )}
+
           {loggedIn && (
             <Button color="inherit" onClick={onDashboardNavigate}>
               Dashboard
@@ -96,7 +95,11 @@ const MenuBar = (props, children) => {
               Invoices
             </Button>
           )}
-          {loggedIn && <Button color="inherit">Your account</Button>}
+          {loggedIn && (
+            <Button color="inherit" onClick={onNavigateToYourAccount}>
+              Your account
+            </Button>
+          )}
           {loggedIn && isAdmin && <Button color="inherit">Services</Button>}
           {loggedIn && !isAdmin && (
             <Button color="inherit" onClick={onContactNavigate}>

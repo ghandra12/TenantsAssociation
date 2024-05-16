@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration.UserSecrets;
+using System.Security.Claims;
 using TenantsAssociation.BusinessLogic.DTOs;
 using TenantsAssociation.BusinessLogic.enums;
 using TenantsAssociation.BusinessLogic.IServices;
@@ -49,6 +51,24 @@ namespace tenants_association_be.Controllers
         public async Task AddUser([FromBody] UserDto userDto)
         {
             await _userService.AddUser(userDto);
+        }
+
+        [HttpPut]
+        [Route("updateUserPassword")]
+        public void UpdateUserPassword([FromBody] string newPassword)
+        {
+            var usr = this.User;
+            int userId = Int32.Parse(usr.Claims.FirstOrDefault(i => i.Type == ClaimTypes.NameIdentifier).Value);
+            _userService.UpdateUserPassword(userId, newPassword);
+        }
+
+        [HttpPut]
+        [Route("updateUserEmail")]
+        public void UpdateUserEmail([FromBody] string email)
+        {
+            var usr = this.User;
+            int userId = Int32.Parse(usr.Claims.FirstOrDefault(i => i.Type == ClaimTypes.NameIdentifier).Value);
+            _userService.UpdateUserEmail(userId, email);
         }
 
     }

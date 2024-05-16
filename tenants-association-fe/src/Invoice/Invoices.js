@@ -25,7 +25,7 @@ const Invoices = () => {
     API.put(`Invoice/payinvoice/${invoiceId}`).then(() => {
       var index = invoices.findIndex((i) => i.id === invoiceId);
       invoices[index].isPaid = true;
-      setInvoices(invoices);
+      setInvoices([...invoices]);
     });
   };
 

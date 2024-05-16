@@ -25,6 +25,11 @@ namespace TenantsAssociation.DataAccess.Repository
         {
             return GetAll().Where(c => c.IsAdmin == false).ToList();
         }
+
+        public User? GetById(int userId)
+        {
+            return GetAll().FirstOrDefault(ur => ur.Id == userId);
+        }
         public User? VerifyUser(string email, string password)
         {
             User? user = GetAll().SingleOrDefault(c => c.Email == email);
