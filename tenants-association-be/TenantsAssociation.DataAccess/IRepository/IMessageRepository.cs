@@ -9,5 +9,7 @@ namespace TenantsAssociation.DataAccess.IRepository
 {
     public interface IMessageRepository:IBaseRepository<Message>
     {
+      public IQueryable<Message> GetAllMessages();
+        public Message GetMessageById(int messageId);
     }
 }
