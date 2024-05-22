@@ -16,5 +16,6 @@ namespace TenantsAssociation.BusinessLogic.DTOs
         public double Sum { get; set; }
         public int UserId { get; set; }
         public bool IsPaid {  get; set; }
+        public double Remaining { get; set; }
     }
 }

@@ -38,7 +38,7 @@ namespace TenantsAssociation.Tests
             //Arrange
             _userRepository.Setup(ur => ur.VerifyUser(It.IsAny<string>(), It.IsAny<string>())).Returns<User?>(null);
             //Act
-            var result = _userService.Login(new UserDto { Email = "Test", Password = "Test" });
+            var result = _userService.Login(new UserDto { Email = "Test11111", Password = "Test111111" });
             //Assert
             Assert.IsNull(result.UserId);
             Assert.IsNull(result.Token);
@@ -63,7 +63,7 @@ namespace TenantsAssociation.Tests
 
             _userRepository.Setup(ur => ur.VerifyUser(It.IsAny<string>(), It.IsAny<string>())).Returns(user);
             //Act
-            var result = _userService.Login(new UserDto { Email = "Test", Password = "Test" });
+            var result = _userService.Login(new UserDto { Email = "Test11111", Password = "Test111111" });
             //Assert
             Assert.IsNotNull(result.UserId);
             Assert.IsNotNull(result.Token);
@@ -77,19 +77,19 @@ namespace TenantsAssociation.Tests
             var user = new User()
             {
                 IsAdmin = false,
-                Email = "Test",
+                Email = "Test123231",
                 ApartmentNumber = 1,
                 FirstName = "Test",
                 Id = 1,
                 LastName = "Test",
-                Password = "Test",
+                Password = "Test123213",
                 PhoneNumber = "0712312312"
             };
 
             _userRepository.Setup(ur => ur.VerifyUser(It.IsAny<string>(), It.IsAny<string>())).Returns(user);
 
             //Act
-            var result = _userService.Login(new UserDto { Email = "Test", Password = "Test" });
+            var result = _userService.Login(new UserDto { Email = "Test11111", Password = "Test11111" });
 
             //Assert
             Assert.IsNotNull(result.UserId);
@@ -103,8 +103,8 @@ namespace TenantsAssociation.Tests
             //Arrange
             var userDto = new UserDto()
             {
-                Email = "Test",
-                Password = "Test",
+                Email = "Test12321",
+                Password = "Test123213",
                 IsAdmin = true,
                 ApartmentNumber = 1,
                 FirstName = "Test",

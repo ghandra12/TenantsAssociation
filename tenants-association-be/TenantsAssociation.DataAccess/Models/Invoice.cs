@@ -21,7 +21,6 @@ namespace TenantsAssociation.DataAccess.Models
         public int? UserId { get; set; }
         public User? User { get; set; }
         public bool IsPaid { get; set; }
-
-
+        public ICollection<Payment> Payments { get; set; } = null!;
     }
 }

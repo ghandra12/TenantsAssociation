@@ -49,5 +49,11 @@ namespace tenants_association_be.Controllers
             _invoiceService.UpdateInvoiceStatus(invoiceId);
         }
 
+        [HttpPost]
+        [Route("addpayment/{invoiceId}")]
+        public async Task AddPayment(int invoiceId, [FromBody] double sum)
+        {
+            await _invoiceService.AddPayment(invoiceId, sum);
+        }
     }
 }

@@ -32,7 +32,7 @@ namespace TenantsAssociation.BusinessLogic.Services
 
         public List<InvoiceDto> GetInvoices(int id)
         {
-            List<Invoice> invoices = _unitOfWork.Invoices.GetInvoicesByUserId(id);
+            var invoices = _unitOfWork.Invoices.GetInvoicesByUserId(id);
 
             var invoiceDtos = invoices.Select(i => new InvoiceDto()
             {
@@ -43,6 +43,7 @@ namespace TenantsAssociation.BusinessLogic.Services
                 Sum = i.Sum,
                 IsPaid=i.IsPaid,
                 Id = i.Id,
+                Remaining = i.Sum - i.Payments.Sum(p => p.Sum)
             }).ToList();
 
             return invoiceDtos;
@@ -78,5 +79,42 @@ namespace TenantsAssociation.BusinessLogic.Services
             _unitOfWork.SaveChanges();
         }
 
+        public async Task AddPayment(int invoiceId, double sum)
+        {
+            var invoice = _unitOfWork.Invoices.GetInvoiceById(invoiceId);
+            var payments = _unitOfWork.Payments.GetPaymentsByInvoiceId(invoiceId);
+
+            if(invoice == null)
+            {
+                throw new Exception("Invoice not found");
+            }
+
+            if (invoice.IsPaid)
+            {
+                throw new Exception("Invoice already paid!");
+            }
+
+            var remaining = invoice.Sum - payments.Sum(p => p.Sum);
+
+            if(sum > remaining)
+            {
+                throw new Exception("Cannot pay more than remaining");
+            }
+
+            var payment = new Payment()
+            {
+                Sum = sum,
+                InvoiceId = invoiceId,
+            };
+
+            await _unitOfWork.Payments.InsertAsync(payment);
+            _unitOfWork.SaveChanges();
+
+            if(remaining == sum) {
+                invoice.IsPaid = true;
+                _unitOfWork.Invoices.Update(invoice);
+                _unitOfWork.SaveChanges();
+            }
+        }
     }
 }

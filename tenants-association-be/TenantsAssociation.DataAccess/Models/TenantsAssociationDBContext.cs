@@ -11,6 +11,7 @@ namespace TenantsAssociation.DataAccess.Models
         public DbSet<PollAnswer> Answers { get; set; }
         public DbSet<PollResponse> Responses { get; set; }
         public DbSet<Message> Messages { get; set; }
+        public DbSet<Payment> Payments { get; set; }
         public TenantsAssociationDBContext(DbContextOptions<TenantsAssociationDBContext> options) : base(options)
         { }
     }
