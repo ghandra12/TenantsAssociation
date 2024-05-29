@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,9 +16,9 @@ namespace TenantsAssociation.DataAccess.Repository
         {
 
         }
-       public  List<Invoice> GetInvoicesByUserId(int Id)
+       public  IQueryable<Invoice> GetInvoicesByUserId(int Id)
         {
-            return GetAll().Where(c => c.UserId == Id).ToList();
+            return GetAll().Include(i => i.Payments).Where(c => c.UserId == Id);
         }
 
         public Invoice? GetInvoiceById(int id)
@@ -28,6 +29,11 @@ namespace TenantsAssociation.DataAccess.Repository
        public List<Invoice> GetUnpaidInvoicesByUserId(int Id)
         {
             return GetAll().Where(c => c.UserId == Id && c.IsPaid==false).ToList();
+        }
+
+        public Invoice? GetInvoiceWithPaymentsById(int invoiceId)
+        {
+            return GetAll().FirstOrDefault(i => i.Id == invoiceId);
         }
     }
 }

@@ -22,6 +22,7 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { PieChart } from "@mui/x-charts";
+import EmojiEmotionsIcon from "@mui/icons-material/EmojiEmotions";
 const TenantHomepage = () => {
   const { user } = useContext(UserContext);
   const [invoices, setInvoices] = useState([]);
@@ -122,25 +123,33 @@ const TenantHomepage = () => {
           >
             Unpaid invoices:
           </Typography>
-          <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
-              <TableBody>
-                {invoices.map((invoice) => (
-                  <TableRow
-                    key={invoice.id}
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  >
-                    <TableCell component="th" scope="row">
-                      {invoice.description}
-                    </TableCell>
-                    <TableCell align="right">
-                      {invoice.dueDate.split("T")[0]}
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+          {invoices.length > 0 && (
+            <TableContainer component={Paper}>
+              <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                <TableBody>
+                  {invoices.map((invoice) => (
+                    <TableRow
+                      key={invoice.id}
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    >
+                      <TableCell component="th" scope="row">
+                        {invoice.description}
+                      </TableCell>
+                      <TableCell align="right">
+                        {invoice.dueDate.split("T")[0]}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          )}
+          {invoices.length === 0 && (
+            <>
+              <Typography>You paid all your invoices ! </Typography>
+              <EmojiEmotionsIcon color="secondary" />
+            </>
+          )}
         </Grid>
       </Grid>
       <Grid

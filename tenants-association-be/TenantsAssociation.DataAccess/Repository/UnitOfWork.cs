@@ -17,6 +17,7 @@ namespace TenantsAssociation.DataAccess.Repository
         private IPollRepository? pollRepository;
         private IPollResponseRepository? pollResponseRepository;    
         private IMessageRepository? messageRepository;
+        private IPaymentRepository? paymentRepository;
         public UnitOfWork(TenantsAssociationDBContext dbContext)
         {
             db = dbContext;
@@ -30,6 +31,17 @@ namespace TenantsAssociation.DataAccess.Repository
                     this.messageRepository = new MessageRepository(db);
                 }
                 return this.messageRepository;
+            }
+        }
+        public IPaymentRepository Payments
+        {
+            get
+            {
+                if (this.paymentRepository == null)
+                {
+                    this.paymentRepository = new PaymentRepository(db);
+                }
+                return this.paymentRepository;
             }
         }
         public IUserRepository Users

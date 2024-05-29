@@ -14,6 +14,7 @@ namespace TenantsAssociation.DataAccess.IRepository
         IPollRepository Polls { get; }
         IPollResponseRepository Responses { get; }
         IMessageRepository Messages { get; }
+        IPaymentRepository Payments { get; }
         int SaveChanges();
     }
 }

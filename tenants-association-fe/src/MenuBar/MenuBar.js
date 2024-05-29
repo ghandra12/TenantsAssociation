@@ -100,7 +100,7 @@ const MenuBar = (props, children) => {
               Your account
             </Button>
           )}
-          {loggedIn && isAdmin && <Button color="inherit">Services</Button>}
+
           {loggedIn && !isAdmin && (
             <Button color="inherit" onClick={onContactNavigate}>
               Contact
