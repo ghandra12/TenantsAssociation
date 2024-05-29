@@ -10,7 +10,7 @@ import AppRoutes from "../AppRoute/AppRoute";
 import UserContext from "../Services/UserContext";
 
 const MenuBar = (props, children) => {
-  const { setUser } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
 
   const navigate = useNavigate();
   const [loggedIn, setLoggedIn] = useState(false);
@@ -28,7 +28,7 @@ const MenuBar = (props, children) => {
       sessionStorage.getItem("userType") === "1" ||
         localStorage.getItem("userType") === "1"
     );
-  }, [setUser]);
+  }, [user, setUser]);
 
   const logOutHandler = () => {
     localStorage.removeItem("authenticated");
@@ -37,6 +37,8 @@ const MenuBar = (props, children) => {
     sessionStorage.removeItem("token");
     localStorage.removeItem("userType");
     sessionStorage.removeItem("userType");
+    localStorage.removeItem("userId");
+    sessionStorage.removeItem("userId");
     setLoggedIn(false);
     navigate("/");
   };
